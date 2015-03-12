@@ -6,8 +6,10 @@
 .idea/.name
 .idea/*.xml
 .idea/workspace.xml
+.idea/uiDesigner.xml
 !.idea/vcs.xml
 !.idea/uiDesigner.xml
+logs/
 project/target
 target
 /target
