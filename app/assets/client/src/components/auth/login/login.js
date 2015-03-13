@@ -1,7 +1,7 @@
 export class LoginController {
-  constructor($timeout) {
+  constructor() {
   }
 
-  static login(username, password) {
+  static login() {
   }
 }
