@@ -10,8 +10,9 @@ var $ = require('gulp-load-plugins')({
 
 gulp.task('partials', function () {
   return gulp.src([
-    paths.src + '/{app,components}/**/*.html',
-    paths.tmp + '/{app,components}/**/*.html'
+    paths.src + '/components/**/*.html',
+    paths.src + '/common/**/*.html',
+    paths.tmp + '/components/**/*.html'
   ])
     .pipe($.minifyHtml({
       empty: true,
@@ -32,7 +33,7 @@ gulp.task('html', ['inject', 'partials'], function () {
     addRootSlash: false
   };
 
-  var htmlFilter = $.filter('*.html');
+  var htmlFilter = $.filter('**/*.html');
   var jsFilter = $.filter('**/*.js');
   var cssFilter = $.filter('**/*.css');
   var assets;

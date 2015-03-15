@@ -7,7 +7,7 @@ var paths = gulp.paths;
 var $ = require('gulp-load-plugins')();
 
 gulp.task('scripts', function () {
-  return gulp.src(paths.src + '/{app,components}/**/*.js')
+  return gulp.src(paths.src + '/**/*.js')
     .pipe($.jshint())
     .pipe($.jshint.reporter('jshint-stylish'))
     .pipe($.traceur())
@@ -20,12 +20,12 @@ gulp.task('scripts', function () {
 });
 
 gulp.task('browserify', ['scripts'], function () {
-  return gulp.src(paths.tmp + '/traceur/app/index.js', { read: false })
+  return gulp.src(paths.tmp + '/traceur/app.js', { read: false })
     .pipe($.browserify())
     .on('error', function handleError(err) {
       console.error(err.toString());
       this.emit('end');
     })
-    .pipe(gulp.dest(paths.tmp + '/serve/app'))
+    .pipe(gulp.dest(paths.tmp + '/serve'))
     .pipe($.size());
 });
