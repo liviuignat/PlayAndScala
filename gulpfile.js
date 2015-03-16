@@ -3,10 +3,11 @@
 var gulp = require('gulp');
 
 gulp.paths = {
-  src: 'src',
-  dist: 'dist',
+  bower: 'app/assets/client/bower_components',
+  src: 'app/assets/client/src',
+  dist: 'public/dist',
   tmp: '.tmp',
-  e2e: 'e2e'
+  e2e: 'app/assets/client/e2e'
 };
 
 require('require-dir')('./gulp');

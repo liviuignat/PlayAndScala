@@ -16,12 +16,14 @@ function browserSyncInit(baseDir, files, browser) {
   var routes = null;
   if(baseDir === paths.src || (util.isArray(baseDir) && baseDir.indexOf(paths.src) !== -1)) {
     routes = {
-      '/bower_components': 'bower_components'
+      '/bower_components': paths.bower,
+      '/app/': baseDir
     };
   }
 
   browserSync.instance = browserSync.init(files, {
     startPath: '/',
+    port: 3030,
     server: {
       baseDir: baseDir,
       middleware: middleware,
