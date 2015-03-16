@@ -10,9 +10,8 @@ var $ = require('gulp-load-plugins')({
 
 gulp.task('partials', function () {
   return gulp.src([
-    paths.src + '/components/**/*.html',
-    paths.src + '/common/**/*.html',
-    paths.tmp + '/components/**/*.html'
+    paths.src + '/{app,components}/**/*.html',
+    paths.tmp + '/{app,components}/**/*.html'
   ])
     .pipe($.minifyHtml({
       empty: true,
@@ -20,7 +19,7 @@ gulp.task('partials', function () {
       quotes: true
     }))
     .pipe($.angularTemplatecache('templateCacheHtml.js', {
-      module: 'gulpAngularEs6'
+      module: 'app'
     }))
     .pipe(gulp.dest(paths.tmp + '/partials/'));
 });
@@ -33,7 +32,7 @@ gulp.task('html', ['inject', 'partials'], function () {
     addRootSlash: false
   };
 
-  var htmlFilter = $.filter('**/*.html');
+  var htmlFilter = $.filter('*.html');
   var jsFilter = $.filter('**/*.js');
   var cssFilter = $.filter('**/*.css');
   var assets;

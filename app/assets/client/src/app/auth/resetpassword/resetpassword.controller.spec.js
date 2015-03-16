@@ -1,6 +1,6 @@
 'use strict';
 
-describe('LoginController', function(){
+describe('ResetPasswordController', function(){
   var scope;
 
   beforeEach(module('app'));

@@ -17,14 +17,14 @@ gulp.task('styles', function () {
   };
 
   var injectFiles = gulp.src([
-    paths.src + '/{styles}/**/*.less',
-    '!' + paths.src + '/styles/index.less',
-    '!' + paths.src + '/styles/vendor.less'
+    paths.src + '/{app,components}/**/*.less',
+    '!' + paths.src + '/app/index.less',
+    '!' + paths.src + '/app/vendor.less'
   ], { read: false });
 
   var injectOptions = {
     transform: function(filePath) {
-      filePath = filePath.replace(paths.src + '/styles/', '');
+      filePath = filePath.replace(paths.src + '/app/', '');
       filePath = filePath.replace(paths.src + '/components/', '../components/');
       return '@import \'' + filePath + '\';';
     },
@@ -36,8 +36,8 @@ gulp.task('styles', function () {
   var indexFilter = $.filter('index.less');
 
   return gulp.src([
-    paths.src + '/styles/index.less',
-    paths.src + '/styles/vendor.less'
+    paths.src + '/app/index.less',
+    paths.src + '/app/vendor.less'
   ])
     .pipe(indexFilter)
     .pipe($.inject(injectFiles, injectOptions))
@@ -49,5 +49,5 @@ gulp.task('styles', function () {
       console.error(err.toString());
       this.emit('end');
     })
-    .pipe(gulp.dest(paths.tmp + '/serve/styles/'));
+    .pipe(gulp.dest(paths.tmp + '/serve/app/'));
 });
