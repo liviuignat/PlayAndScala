@@ -11,11 +11,11 @@ angular.module('app', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngRes
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: '/app/auth/login/login.tpl.html',
+        templateUrl: 'app/auth/login/login.tpl.html',
         controller: 'LoginController'
       })
       .when('/resetpassword', {
-        templateUrl: '/app/auth/resetpassword/resetpassword.tpl.html',
+        templateUrl: 'app/auth/resetpassword/resetpassword.tpl.html',
         controller: 'ResetPasswordController'
       })
       .otherwise({
