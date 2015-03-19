@@ -13,7 +13,7 @@ class Application @Inject() () extends Controller {
 
   def index() = staticFile("public/dev/serve/index.html")
 
-  def app(path: String) = staticFile("public/dev/app/index.html")
+  def app(path: String) = staticFile("public/dev/serve/index.html")
 
   def staticFile(file: String) = Action {
     val f = new File(file)
