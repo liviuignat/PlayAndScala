@@ -1,12 +1,14 @@
-'use strict';
-/*jshint esnext: true */
+ /*jshint esnext: true */
+(function (app) {
+  'use strict';
 
-class ResetPasswordController {
-  constructor ($scope) {
-    $scope.email = 'liviu@ignat.email';
+  class ResetPasswordController {
+    constructor ($scope) {
+      $scope.email = 'liviu@ignat.email';
+    }
   }
-}
 
-ResetPasswordController.$inject = ['$scope'];
+  ResetPasswordController.$inject = ['$scope'];
+  app.controller('ResetPasswordController', ResetPasswordController);
 
-export default ResetPasswordController;
+}(angular.module('app')));

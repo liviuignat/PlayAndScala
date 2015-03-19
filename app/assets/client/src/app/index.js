@@ -1,12 +1,9 @@
 'use strict';
 /*jshint esnext: true */
 
-import LoginController from './auth/login/login.controller';
-import ResetPasswordController from './auth/resetpassword/resetpassword.controller';
-
 angular.module('app', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ngRoute', 'ui.bootstrap'])
-  .controller('ResetPasswordController', ResetPasswordController)
-  .controller('LoginController', LoginController)
+//  .controller('ResetPasswordController', ResetPasswordController)
+//  .controller('LoginController', LoginController)
 
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider

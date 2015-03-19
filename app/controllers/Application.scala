@@ -11,9 +11,9 @@ class Application @Inject() () extends Controller {
 
   private final val logger: Logger = LoggerFactory.getLogger(classOf[Application])
 
-  def index() = staticFile("public/dist/index.html")
+  def index() = staticFile("public/dev/serve/index.html")
 
-  def app(path: String) = staticFile("public/dist/index.html")
+  def app(path: String) = staticFile("public/dev/app/index.html")
 
   def staticFile(file: String) = Action {
     val f = new File(file)
@@ -21,6 +21,6 @@ class Application @Inject() () extends Controller {
     if (f.exists())
       Ok(scala.io.Source.fromFile(f.getCanonicalPath()).mkString).as("text/html")
     else
-      NotFound
+      NotFound("Resource not found")
   }
 }

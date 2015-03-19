@@ -11,13 +11,12 @@
     <!-- build:css({.tmp/serve,src}) /styles/vendor.css -->
     <link rel="stylesheet" href="/assets/vendor.css">
     <!-- bower:css -->
-    <!-- run `gulp wiredep` to automaticaly populate bower styles dependencies -->
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:css({.tmp/serve,src}) /styles/app.css -->
     <!-- inject:css -->
-    <!-- css files will be automaticaly insert here -->
+    <link rel="stylesheet" href="/assets/index.css">
     <!-- endinject -->
     <!-- endbuild -->
   </head>
@@ -40,13 +39,26 @@
 
     <!-- build:js(src) /scripts/vendor.js -->
     <!-- bower:js -->
-    <!-- run `gulp wiredep` to automaticaly populate bower script dependencies -->
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="/bower_components/angular-touch/angular-touch.js"></script>
+    <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/bower_components/angular-resource/angular-resource.js"></script>
+    <script src="/bower_components/angular-route/angular-route.js"></script>
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="/bower_components/traceur-runtime/traceur-runtime.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js({.tmp/serve,.tmp/partials,src}) /scripts/app.js -->
     <!-- inject:js -->
-    <!-- js files will be automaticaly insert here -->
+    <script src="/assets/index.js"></script>
+    <script src="/assets/auth/login/login.controller.js"></script>
+    <script src="/assets/auth/login/login.controller.spec.js"></script>
+    <script src="/assets/auth/resetpassword/resetpassword.controller.js"></script>
+    <script src="/assets/auth/resetpassword/resetpassword.controller.spec.js"></script>
     <!-- endinject -->
 
     <!-- inject:partials -->
