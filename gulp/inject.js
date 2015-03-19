@@ -14,11 +14,20 @@ gulp.task('inject', ['styles', 'scripts'], function () {
   var injectScripts = gulp.src([
     paths.tmp + '/serve/app/index.js',
     paths.tmp + '/serve/{app,components}/**/*.js',
-    '!' + paths.src + '/{app,components}/**/*.spec.js',
-    '!' + paths.src + '/{app,components}/**/*.mock.js'
+    '!' + paths.tmp + '/serve/app/templateCacheHtml.js',
+    '!' + paths.tmp + '/serve/{app,components}/**/*.spec.js',
+    '!' + paths.tmp + '/serve/{app,components}/**/*.mock.js'
   ], {
     read: false
   });
+
+  var partialsInjectFile = gulp.src(paths.tmp + '/serve/app/templateCacheHtml.js', { read: false });
+  var partialsInjectOptions = {
+    starttag: '<!-- inject:partials -->',
+    ignorePath: paths.tmp + '/serve/app/',
+    addRootSlash: true,
+    addPrefix: 'assets'
+  };
 
   var injectOptions = {
     ignorePath: [paths.src, paths.tmp + '/serve/app/'],
@@ -35,6 +44,7 @@ gulp.task('inject', ['styles', 'scripts'], function () {
   return gulp.src(paths.src + '/*.html')
     .pipe($.inject(injectStyles, injectOptions))
     .pipe($.inject(injectScripts, injectOptions))
+    .pipe($.inject(partialsInjectFile, partialsInjectOptions))
     .pipe(wiredep(wiredepOptions))
     .pipe(gulp.dest(paths.tmp + '/serve'));
 

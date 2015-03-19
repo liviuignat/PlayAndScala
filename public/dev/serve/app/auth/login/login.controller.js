@@ -8,6 +8,6 @@
     };
   };
   ($traceurRuntime.createClass)(LoginController, {}, {});
-  app.controller('LoginController', LoginController);
   LoginController.$inject = ['$scope'];
+  app.controller('LoginController', LoginController);
 }(angular.module('app')));

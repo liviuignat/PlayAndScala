@@ -1,0 +1,2 @@
+angular.module("app").run(["$templateCache", function($templateCache) {$templateCache.put("app/auth/login/login.tpl.html","<h1>Login</h1><a href=\"resetpassword\">reset password</a>");
+$templateCache.put("app/auth/resetpassword/resetpassword.tpl.html","<h1>ResetPasswordController</h1>");}]);
