@@ -1,0 +1,21 @@
+@(title: String)(content: Html)
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>@title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body class="container">
+    <header class="navbar">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+      </ul>
+    </header>
+    <article>
+      @content
+    </article>
+    <footer>
+      <p>© <a href="mailto:julien@@richard-foy.fr">Liviu Ignat</a></p>
+    </footer>
+  </body>
+</html>
