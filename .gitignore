@@ -2,7 +2,7 @@ node_modules
 bower_components
 .tmp
 public/dist
-public/.tmp
+public/dev
 public/bower_components
 .idea/scopes/
 .idea/dictionaries/
