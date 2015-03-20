@@ -10,12 +10,11 @@ Isues covered on this repository:
 * Deploy it on Heroku cedar stack
 
 ####Install app
+Make sure you have installed: Scala, SBT, NodeJS, bower, gulp-cli 
+
 ```
 ~ sudo npm install
 ~ bower install
-~ cd ./app/assets/client
-~ bower install
-// go back to root folder
 ~ sbt compile run
 //in a second window enable browser-sync
 ~ guld serve
