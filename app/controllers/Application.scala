@@ -11,9 +11,9 @@ class Application @Inject() () extends Controller {
 
   private final val logger: Logger = LoggerFactory.getLogger(classOf[Application])
 
-  def index() = staticFile("public/dev/serve/index.html")
+  def index() = staticFile("public/dev/assets/index.html")
 
-  def app(path: String) = staticFile("public/dev/serve/index.html")
+  def app(path: String) = staticFile("public/assets/serve/index.html")
 
   def staticFile(file: String) = Action {
     val f = new File(file)

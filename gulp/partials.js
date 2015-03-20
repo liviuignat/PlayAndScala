@@ -17,5 +17,5 @@ gulp.task('partials', function () {
     .pipe($.angularTemplatecache('templateCacheHtml.js', {
       module: 'app'
     }))
-    .pipe(gulp.dest(paths.tmp + '/serve/app/'));
+    .pipe(gulp.dest(paths.tmp + '/assets/app/'));
 });

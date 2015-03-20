@@ -13,6 +13,6 @@ gulp.task('scripts', ['partials'], function () {
       console.error(err.toString());
       this.emit('end');
     })
-    .pipe(gulp.dest(paths.tmp + '/serve'))
+    .pipe(gulp.dest(paths.tmp + '/assets'))
     .pipe($.size())
 });

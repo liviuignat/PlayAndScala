@@ -8,14 +8,14 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-    <!-- build:css({.tmp/serve,src}) /assets/vendor.css -->
-    <link rel="stylesheet" href="/assets/vendor.css">
+    <!-- build:css({public/dev,src}) /assets/app/vendor.css -->
+    <link rel="stylesheet" href="/assets/app/vendor.css">
     <!-- bower:css -->
     <!-- run `gulp wiredep` to automaticaly populate bower styles dependencies -->
     <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- build:css({.tmp/serve,src}) /styles/app.css -->
+    <!-- build:css({public/dev,src}) /assets/app/app.css -->
     <!-- inject:css -->
     <!-- css files will be automaticaly insert here -->
     <!-- endinject -->
@@ -38,13 +38,13 @@
       ga('create','UA-XXXXX-X');ga('send','pageview');
     </script>
 
-    <!-- build:js(src) /scripts/vendor.js -->
+    <!-- build:js(public) /assets/app/vendor.js -->
     <!-- bower:js -->
     <!-- run `gulp wiredep` to automaticaly populate bower script dependencies -->
     <!-- endbower -->
     <!-- endbuild -->
 
-    <!-- build:js({.tmp/serve,.tmp/partials,src}) /scripts/app.js -->
+    <!-- build:js(public/dev) /assets/app/app.js -->
     <!-- inject:js -->
     <!-- js files will be automaticaly insert here -->
     <!-- endinject -->

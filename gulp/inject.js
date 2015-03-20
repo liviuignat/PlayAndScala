@@ -7,31 +7,29 @@ var wiredep = require('wiredep').stream;
 
 gulp.task('inject', ['styles', 'scripts'], function () {
   var injectStyles = gulp.src([
-    paths.tmp + '/serve/{app,components}/**/*.css',
-    '!' + paths.tmp + '/serve/app/vendor.css'
+    paths.tmp + '/assets/{app,components}/**/*.css',
+    '!' + paths.tmp + '/assets/app/vendor.css'
   ], { read: false });
 
   var injectScripts = gulp.src([
-    paths.tmp + '/serve/app/index.js',
-    paths.tmp + '/serve/{app,components}/**/*.js',
-    '!' + paths.tmp + '/serve/app/templateCacheHtml.js',
-    '!' + paths.tmp + '/serve/{app,components}/**/*.spec.js',
-    '!' + paths.tmp + '/serve/{app,components}/**/*.mock.js'
+    paths.tmp + '/assets/app/index.js',
+    paths.tmp + '/assets/{app,components}/**/*.js',
+    '!' + paths.tmp + '/assets/app/templateCacheHtml.js',
+    '!' + paths.tmp + '/assets/{app,components}/**/*.spec.js',
+    '!' + paths.tmp + '/assets/{app,components}/**/*.mock.js'
   ], {
     read: false
   });
 
-  var partialsInjectFile = gulp.src(paths.tmp + '/serve/app/templateCacheHtml.js', { read: false });
+  var partialsInjectFile = gulp.src(paths.tmp + '/assets/app/templateCacheHtml.js', { read: false });
   var partialsInjectOptions = {
     starttag: '<!-- inject:partials -->',
-    ignorePath: paths.tmp + '/serve/app/',
-    addRootSlash: true,
-    addPrefix: 'assets'
+    ignorePath: paths.tmp,
+    addRootSlash: true
   };
 
   var injectOptions = {
-    ignorePath: [paths.src, paths.tmp + '/serve/app/'],
-    addPrefix: 'assets',
+    ignorePath: [paths.src, paths.tmp],
     addRootSlash: true
   };
 
@@ -46,6 +44,6 @@ gulp.task('inject', ['styles', 'scripts'], function () {
     .pipe($.inject(injectScripts, injectOptions))
     .pipe($.inject(partialsInjectFile, partialsInjectOptions))
     .pipe(wiredep(wiredepOptions))
-    .pipe(gulp.dest(paths.tmp + '/serve'));
+    .pipe(gulp.dest(paths.tmp + '/assets'));
 
 });

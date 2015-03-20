@@ -10,7 +10,7 @@ GET     /randomUUID                 @controllers.Index.randomUUID
 
 # Single page app endpoint
 GET     /app                        @controllers.Application.index
-GET     /app*path                  @controllers.Application.app(path)
+GET     /app*path                   @controllers.Application.app(path)
 
 # User management API
 GET     /users                      @controllers.Users.findUsers
@@ -19,4 +19,4 @@ PUT     /user/:firstName/:lastName  @controllers.Users.updateUser(firstName: Str
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /bower_components/*file     controllers.Assets.at(path="/public/bower_components", file)
-GET     /assets/*file               controllers.Assets.at(path="/public/dev/serve/app", file)
+GET     /assets/*file               controllers.Assets.at(path="/public/dev/assets", file)
