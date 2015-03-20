@@ -9,6 +9,7 @@ gulp.task('styles', function () {
     paths.src + '/app/index.less',
     paths.src + '/app/vendor.less'
   ])
+    .pipe($.plumber())
     .pipe($.less())
     .pipe($.autoprefixer()).on('error', function handleError(err) {
       console.error(err.toString());
