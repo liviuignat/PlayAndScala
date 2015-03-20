@@ -2,7 +2,7 @@
   "name": "app",
   "version": "0.0.1",
   "engines": {
-    "node": "=0.10.0"
+    "node": ">=0.10.0"
   },
   "dependencies": {
     "gulp": "~3.8.10",
@@ -33,13 +33,15 @@
     "main-bower-files": "~2.4.0",
     "jshint-stylish": "~1.0.0",
     "wiredep": "~2.2.0",
-    "karma-jasmine": "~0.3.1",
-    "karma-phantomjs-launcher": "~0.1.4",
     "require-dir": "~0.1.0",
     "browser-sync": "~1.7.1",
     "http-proxy": "~1.7.0",
     "chalk": "~0.5.1",
-    "protractor": "~1.4.0",
     "uglify-save-license": "~0.4.1"
+  },
+  "devDependencies": {
+    "karma-jasmine": "~0.3.1",
+    "karma-phantomjs-launcher": "~0.1.4",
+    "protractor": "~1.4.0"
   }
 }
