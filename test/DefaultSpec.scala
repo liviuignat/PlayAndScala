@@ -1,5 +1,3 @@
-package filesearcher
-
 import org.scalatest.FunSpec
 
 
