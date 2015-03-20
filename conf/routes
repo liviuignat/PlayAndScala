@@ -12,11 +12,6 @@ GET     /randomUUID                 @controllers.Index.randomUUID
 GET     /app                        @controllers.Application.index
 GET     /app*path                   @controllers.Application.app(path)
 
-# User management API
-GET     /users                      @controllers.Users.findUsers
-POST    /user                       @controllers.Users.createUser
-PUT     /user/:firstName/:lastName  @controllers.Users.updateUser(firstName: String, lastName: String)
-
 # Map static resources from the /public folder to the /assets URL path
 GET     /bower_components/*file     controllers.Assets.at(path="/public/bower_components", file)
 GET     /assets/*file               controllers.Assets.at(path="/public/dev/assets", file)
