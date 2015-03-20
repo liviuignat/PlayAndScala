@@ -5,7 +5,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "postinstall": "./node_modules/.bin/gulp scripts"
+    "postinstall": "./node_modules/.bin/gulp styles"
   },
   "dependencies": {
     "gulp": "~3.8.10",
