@@ -13,4 +13,7 @@ https://github.com/heroku/heroku-buildpack-scala
 
 ** Make sure you have a package.json in your root file
 
-**
+** Run these commands 
+  heroku buildpack:set https://github.com/heroku/heroku-buildpack-multi
+  heroku config:set SBT_OPTS="-Dsbt.jse.engineType=Node"
+  
