@@ -7,10 +7,14 @@ module.exports = function(config) {
 
     frameworks: ['jasmine'],
 
-    browsers : ['PhantomJS'],
+    browsers : ['Chrome'],
+
+    captureTimeout: 60000,
 
     plugins : [
         'karma-phantomjs-launcher',
+        'karma-chrome-launcher',
+        'karma-firefox-launcher',
         'karma-jasmine'
     ]
   });
