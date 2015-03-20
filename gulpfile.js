@@ -3,7 +3,7 @@
 var gulp = require('gulp');
 
 gulp.paths = {
-  bower: 'app/assets/client/bower_components',
+  bower: 'public/bower_components',
   src: 'app/assets/client/src',
   dist: 'public/dist',
   tmp: 'public/dev',
