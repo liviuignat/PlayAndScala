@@ -1,6 +1,5 @@
 package controllers
 
-import java.io.File
 import javax.inject.{Inject, Singleton}
 
 import org.slf4j.{Logger, LoggerFactory}
@@ -11,16 +10,11 @@ class Application @Inject() () extends Controller {
 
   private final val logger: Logger = LoggerFactory.getLogger(classOf[Application])
 
-  def index() = staticFile("public/dist/index.html")
+  def index() = Action {
+    Ok(views.html.app())
+  }
 
-  def app(path: String) = staticFile("public/dist/index.html")
-
-  def staticFile(file: String) = Action {
-    val f = new File(file)
-
-    if (f.exists())
-      Ok(scala.io.Source.fromFile(f.getCanonicalPath()).mkString).as("text/html")
-    else
-      NotFound
+  def app(path: String) = Action {
+    Ok(views.html.app())
   }
 }

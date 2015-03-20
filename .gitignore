@@ -2,6 +2,8 @@ node_modules
 bower_components
 .tmp
 public/dist
+public/dev
+public/bower_components
 .idea/scopes/
 .idea/dictionaries/
 .idea/inspectionProfiles/

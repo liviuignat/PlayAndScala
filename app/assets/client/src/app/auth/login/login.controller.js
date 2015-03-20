@@ -1,15 +1,17 @@
-'use strict';
 /*jshint esnext: true */
+(function (app) {
+  'use strict';
 
-class LoginController {
-  constructor ($scope) {
-    $scope.user = {
-      email: 'liviu@ignat.email',
-      password: 'test123'
-    };
+  class LoginController {
+    constructor ($scope) {
+      $scope.user = {
+        email: 'liviu@ignat.email',
+        password: 'test123'
+      };
+    }
   }
-}
 
-LoginController.$inject = ['$scope'];
+  LoginController.$inject = ['$scope'];
+  app.controller('LoginController', LoginController);
 
-export default LoginController;
+}(angular.module('app')));

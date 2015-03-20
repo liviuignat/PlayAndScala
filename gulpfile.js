@@ -6,7 +6,8 @@ gulp.paths = {
   bower: 'app/assets/client/bower_components',
   src: 'app/assets/client/src',
   dist: 'public/dist',
-  tmp: '.tmp',
+  tmp: 'public/dev',
+  views: 'app/views',
   e2e: 'app/assets/client/e2e'
 };
 

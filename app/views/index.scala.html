@@ -1,46 +1,11 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Modern Web Template</title>
-    </head>
-    <body>
-
-    <!-- Fixed navbar -->
-    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/app">Modern Web Template</a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container-fluid">
-
-        <div class="row">
-            <div class="col-sm-12">
-                App content here
-            </div>
-        </div>
-
-    </div>
-
-    <footer>
-        <hr/>
-        <div>
-            <span>&copy; YourProjectName.com 2015</span>
-            </div>
-        <div>
-            <span app-version></span>
-        </div>
-    </footer>
-
-    </body>
-
-</html>
+@defining("Using Scala macros to dynamically call Play! templates") { title =>
+  @layout(title) {
+    <h1>@title</h1>
+    <a class="navbar-brand" href="/app">Modern Web Template</a>
+    <p>This Web site demonstrates the utilization of Scala macros to dynamically call Play! templates. The pages you see are rendered using a template that is dynamically chosen according to the request URL path. In the same way, the navigation menu is dynamically generated from the list of pages.</p>
+    <p>The code of this experiment is available on <a href="http://github.com/julienrf/play-macro-templates">GitHub</a>. If you want to try it, just clone the repository:</p>
+    <pre><code>$ git clone git@@github.com:julienrf/play-macro-templates.git</code></pre>
+    <p>And run the application:</p>
+    <pre><code>$ cd play-macro-templates; sbt run</code></pre>
+  }
+}
