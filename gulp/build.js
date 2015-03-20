@@ -6,6 +6,7 @@ var paths = gulp.paths;
 var $ = require('gulp-load-plugins')({
   pattern: ['gulp-*', 'main-bower-files', 'uglify-save-license', 'del']
 });
+var runSequence = require('run-sequence');
 
 gulp.task('html', ['inject', 'partials'], function () {
 
@@ -54,4 +55,10 @@ gulp.task('clean', function (done) {
   $.del([paths.dist + '/', paths.tmp + '/'], done);
 });
 
-gulp.task('build', ['html', 'images', 'fonts', 'misc']);
+gulp.task('build:prod', function(done) {
+  runSequence(['html', 'images', 'fonts', 'misc'],
+              'replace_prod',
+              done);
+});
+
+gulp.task('build:dev', ['inject', 'replace_dev']);
