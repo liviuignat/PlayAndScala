@@ -5,7 +5,7 @@
     "node": ">=0.10.0"
   },
   "scripts": {
-    "postinstall": "./node_modules/.bin/gulp styles"
+    "postinstall": "./node_modules/.bin/gulp inject"
   },
   "dependencies": {
     "browser-sync": "~1.7.1",
