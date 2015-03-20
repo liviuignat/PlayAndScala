@@ -44,6 +44,6 @@ gulp.task('inject', ['styles', 'scripts'], function () {
     .pipe($.inject(injectScripts, injectOptions))
     .pipe($.inject(partialsInjectFile, partialsInjectOptions))
     .pipe(wiredep(wiredepOptions))
-    .pipe(gulp.dest(paths.tmp + '/assets'));
+    .pipe(gulp.dest(paths.views));
 
 });

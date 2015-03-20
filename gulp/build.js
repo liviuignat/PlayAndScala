@@ -14,8 +14,8 @@ gulp.task('html', ['inject', 'partials'], function () {
   var cssFilter = $.filter('**/*.css');
   var assets;
 
-  return gulp.src(paths.tmp + '/assets/*.html')
-    .pipe(assets = $.useref.assets({searchPath: ['public/dev/serve']}))
+  return gulp.src(paths.views + '/layout.scala.html')
+    .pipe(assets = $.useref.assets())
     .pipe($.rev())
     .pipe(jsFilter)
     .pipe($.uglify({mangle: false, preserveComments: $.uglifySaveLicense}))
@@ -28,11 +28,6 @@ gulp.task('html', ['inject', 'partials'], function () {
     .pipe($.useref())
     .pipe($.revReplace())
     .pipe(htmlFilter)
-//    .pipe($.minifyHtml({
-//      empty: true,
-//      spare: true,
-//      quotes: true
-//    }))
     .pipe(htmlFilter.restore())
     .pipe(gulp.dest(paths.dist + '/'))
     .pipe($.size({ title: paths.dist + '/', showFiles: true }));

@@ -10,7 +10,6 @@ GET     /randomUUID                 @controllers.Index.randomUUID
 
 # Single page app endpoint
 GET     /app                        @controllers.Application.index
-GET     /app*path                   @controllers.Application.app(path)
 
 # User management API
 GET     /users                      @controllers.Users.findUsers

@@ -7,6 +7,7 @@ gulp.paths = {
   src: 'app/assets/client/src',
   dist: 'public/dist',
   tmp: 'public/dev',
+  views: 'app/views',
   e2e: 'app/assets/client/e2e'
 };
 

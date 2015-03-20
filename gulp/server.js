@@ -14,7 +14,7 @@ gulp.task('serve', ['watch'], function () {
     // Reload all assets
     // Important: you need to specify the path on your source code
     // not the path on the url
-    files: ['public/**/*.css', 'public/**/*.js', 'app/**/*.html'],
+    files: ['public/**/*.css', 'public/**/*.js', 'app/views/*.html'],
     open: true,
 
 
