@@ -1,5 +1,7 @@
 # Play Framework with Scala, AngularJS, ECMAScript 6, MongoDB template project. [![Build Status](https://travis-ci.org/liviuignat/PlayAndScala.svg?branch=master)](https://travis-ci.org/liviuignat/PlayAndScala)
 
+Published on heroku: https://scalaplaymongo.herokuapp.com/
+
 ### Play Framework, Scala, MongoDB, AngularJS, ECMAScript 6, gulp, browser-sync, TravisCI. 
 ####Isues covered on this repository:
 
