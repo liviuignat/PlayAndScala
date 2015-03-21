@@ -1,4 +1,4 @@
-# Play Framework with Scala, MongoDB, AngularJS template project. 
+# Play Framework with Scala, MongoDB, AngularJS template project. [![Build Status](https://travis-ci.org/liviuignat/PlayAndScala.svg?branch=master)](https://travis-ci.org/liviuignat/PlayAndScala)
 
 Isues covered on this repository:
 
