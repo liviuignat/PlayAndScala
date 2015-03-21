@@ -15,4 +15,4 @@ before_script:
 
 script:
   - "sbt clean test"
-  - "gulp test"
+  - "./node_modules/.bin/karma start ./app/assets/client/karma.conf.js --browsers Firefox --single-run"

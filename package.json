@@ -51,6 +51,8 @@
     "wiredep": "~2.2.0"
   },
   "devDependencies": {
+    "karma": "^0.12.31",
+    "karma-cli": "0.0.4",
     "protractor": "~1.4.0",
     "traceur": "0.0.87"
   }
