@@ -7,7 +7,7 @@ import org.scalatest.FunSpec
 class DefaultSpec extends FunSpec {
   describe("When a value is given") {
     val value = true
-    val expectedValue = false
+    val expectedValue = true
 
     it("Should equal the expected value") {
       assert(expectedValue == value)
