@@ -14,10 +14,11 @@ module.exports = function(config) {
     captureTimeout: 60000,
 
     plugins : [
-        'karma-phantomjs-launcher',
-        'karma-chrome-launcher',
-        'karma-firefox-launcher',
-        'karma-jasmine'
+      'karma-mocha-reporter',
+      'karma-phantomjs-launcher',
+      'karma-chrome-launcher',
+      'karma-firefox-launcher',
+      'karma-jasmine'
     ]
   });
 };
