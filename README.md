@@ -9,7 +9,7 @@ Isues covered on this repository:
 * Install browser-sync
 * Deploy it on Heroku cedar stack
 
-####Install app
+####Install/run app
 Make sure you have installed: Scala, SBT, NodeJS, bower, gulp-cli 
 
 ```
@@ -18,6 +18,36 @@ Make sure you have installed: Scala, SBT, NodeJS, bower, gulp-cli
 ~ sbt compile run
 //in a second window enable browser-sync
 ~ guld serve
+```
+
+####Run tests
+```
+~ sbt test
+~ gulp test
+~ gulp test:auto  //watch on tests
+```
+
+####Travis setup
+Make sure you enabled the project to run on Travis CI on your travis account. This is the .travis.yml:
+```
+language: scala
+scala:
+  - 2.11.6
+node_js:
+  - 0.10
+
+before_install:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+
+before_script:
+  - "npm install -g gulp-cli"
+  - "npm install -g karma"
+  - "npm install"
+
+script:
+  - "sbt clean test"
+  - "./node_modules/.bin/karma start ./app/assets/client/karma.conf.js --browsers Firefox --single-run"
 ```
 
 ####Heroku deployment
