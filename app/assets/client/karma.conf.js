@@ -7,6 +7,8 @@ module.exports = function(config) {
 
     frameworks: ['jasmine'],
 
+    reporters: ['mocha'],
+
     browsers : ['Firefox'],
 
     captureTimeout: 60000,
