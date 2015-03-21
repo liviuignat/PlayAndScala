@@ -1,13 +1,14 @@
-# Play Framework with Scala, MongoDB, AngularJS template project. [![Build Status](https://travis-ci.org/liviuignat/PlayAndScala.svg?branch=master)](https://travis-ci.org/liviuignat/PlayAndScala)
+# Play Framework with Scala, AngularJS, ECMAScript 6, MongoDB template project. [![Build Status](https://travis-ci.org/liviuignat/PlayAndScala.svg?branch=master)](https://travis-ci.org/liviuignat/PlayAndScala)
 
-Isues covered on this repository:
+### Play Framework, Scala, MongoDB, AngularJS, ECMAScript 6, gulp, browser-sync, TravisCI. 
+####Isues covered on this repository:
 
 * Have the Play app set up
 * Have the AngularJS app set up with ES6
 * Have the tests for both Scala and AngularJS apps run in Travis-CI
 * Have the deployment AngularJS set up with ```gulp``` for production and development environments that will: compile ES6 JS with traceur, compile LESS, minimize CSS and JS and many more.
 * Install browser-sync
-* Deploy it on Heroku cedar stack
+* Deploy it on Heroku cedar stack, run ```gulp build:prod``` on Heroku before deployment
 
 ####Install/run app
 Make sure you have installed: Scala, SBT, NodeJS, bower, gulp-cli 
