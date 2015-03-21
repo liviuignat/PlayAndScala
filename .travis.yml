@@ -1,4 +1,14 @@
 language: scala
 scala:
-  - 2.11.2
-script: "sbt clean test"
+  - 2.11.6
+node_js:
+  - 0.10
+
+before_script:
+  - "npm install -g gulp-cli"
+  - "npm install -g karma"
+  - "npm install"
+
+script:
+  - "sbt clean test"
+  - "gulp test"
