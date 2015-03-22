@@ -10,6 +10,8 @@ resolvers += "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositor
 
 libraryDependencies ++= Seq(
   "com.google.inject" % "guice" % "3.0",
+  "com.tzavellas" % "sse-guice" % "0.7.1",
+  "org.reactivemongo" %% "play2-reactivemongo" % "0.10.5.0.akka23",
   "javax.inject" % "javax.inject" % "1",
   "org.mockito" % "mockito-core" % "1.10.17" % "test",
   "org.scalatest" % "scalatest_2.11" % "2.2.1" % "test",

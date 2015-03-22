@@ -12,6 +12,9 @@ GET     /randomUUID                 @controllers.Index.randomUUID
 GET     /app                        @controllers.Application.index
 GET     /app*path                   @controllers.Application.app(path)
 
+# Users endpoints
+POST    /user                       @controllers.Users.createUser
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /bower_components/*file     controllers.Assets.at(path="/public/bower_components", file)
 GET     /assets/*file               controllers.Assets.at(path="/public/dev/assets", file)
