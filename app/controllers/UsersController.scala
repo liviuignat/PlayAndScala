@@ -21,8 +21,8 @@ import business.models._
  */
 
 @Singleton
-class Users @Inject() (userRepository: IUserRepository)  extends Controller with MongoController {
-  private final val logger: Logger = LoggerFactory.getLogger(classOf[Users])
+class UsersController @Inject() (userRepository: IUserRepository)  extends Controller with MongoController {
+  private final val logger: Logger = LoggerFactory.getLogger(classOf[UsersController])
 
   def createUser = Action.async(parse.json) { req =>
     Json.fromJson[User](req.body).fold(

@@ -6,9 +6,9 @@ import org.slf4j.{Logger, LoggerFactory}
 import play.api.mvc._
 
 @Singleton
-class Application @Inject() () extends Controller {
+class ApplicationController @Inject() () extends Controller {
 
-  private final val logger: Logger = LoggerFactory.getLogger(classOf[Application])
+  private final val logger: Logger = LoggerFactory.getLogger(classOf[ApplicationController])
 
   def index() = Action {
     Ok(views.html.app())

@@ -5,15 +5,15 @@
 # ~~~~
 
 # Single endpoint for serving AngularJS
-GET     /                           @controllers.Index.index
-GET     /randomUUID                 @controllers.Index.randomUUID
+GET     /                           @controllers.IndexController.index
+GET     /randomUUID                 @controllers.IndexController.randomUUID
 
 # Single page app endpoint
-GET     /app                        @controllers.Application.index
-GET     /app*path                   @controllers.Application.app(path)
+GET     /app                        @controllers.ApplicationController.index
+GET     /app*path                   @controllers.ApplicationController.app(path)
 
 # Users endpoints
-POST    /user                       @controllers.Users.createUser
+POST    /user                       @controllers.UsersController.createUser
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /bower_components/*file     controllers.Assets.at(path="/public/bower_components", file)
