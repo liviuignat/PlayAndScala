@@ -1,14 +1,15 @@
 package business.models
 
 import play.api.libs.json.Json
+import reactivemongo.bson.BSONObjectID
+import play.modules.reactivemongo.json.BSONFormats._
 
-case class User( email: String,
-                 password: String,
-                 firstName: String,
-                 lastName: String)
+case class User( var _id: Option[BSONObjectID],
+                 email: Option[String],
+                 password: Option[String],
+                 firstName: Option[String],
+                 lastName: Option[String])
 
 object JsonFormats {
-
-  // Generates Writes and Reads for Feed and User thanks to Json Macros
   implicit val userFormat = Json.format[User]
 }

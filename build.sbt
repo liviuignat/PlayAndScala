@@ -9,6 +9,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 resolvers += "Sonatype Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots/"
 
 libraryDependencies ++= Seq(
+  "io.spray" %%  "spray-json" % "1.3.1",
   "com.google.inject" % "guice" % "3.0",
   "com.tzavellas" % "sse-guice" % "0.7.1",
   "org.reactivemongo" %% "play2-reactivemongo" % "0.10.5.0.akka23",
