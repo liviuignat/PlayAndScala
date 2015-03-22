@@ -8,7 +8,8 @@ case class User( var _id: Option[BSONObjectID],
                  email: String,
                  password: String,
                  firstName: Option[String],
-                 lastName: Option[String])
+                 lastName: Option[String],
+                 isActive: Boolean = true)
 
 object JsonFormats {
   implicit val userFormat = Json.format[User]

@@ -1,7 +1,7 @@
 package dao
 
 import business.models.User
-import business.repositories.IUserRepository
+import business.repositories.{FindUsers, IUserRepository}
 import play.modules.reactivemongo.ReactiveMongoPlugin
 import play.modules.reactivemongo.json.collection.JSONCollection
 import play.api.libs.concurrent.Execution.Implicits._
@@ -19,6 +19,10 @@ class UserRepository extends IUserRepository {
 
   private def collection = ReactiveMongoPlugin.db.collection[JSONCollection]("users")
 
+  def getById(id: String) = ???
+
+  override def getAll(query: FindUsers): Future[List[User]] = ???
+
   def insert(user: User): Future[User] = {
     collection.insert(user).map {
       case ok if ok.ok =>
@@ -26,4 +30,8 @@ class UserRepository extends IUserRepository {
       case error => throw new RuntimeException(error.message)
     }
   }
+
+  def update(user: User): Future[User] = ???
+
+  override def delete(id: Int): Unit = ???
 }
