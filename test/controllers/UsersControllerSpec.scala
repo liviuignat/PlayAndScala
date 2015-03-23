@@ -15,6 +15,8 @@ class UsersControllerSpec extends FunSpec {
 
     it("Should be able to do it without any error") {
       ProjectTestUtils.runWithTestDatabase {
+        ProjectTestUtils.clearDbData()
+
         val request = FakeRequest.apply("POST", "/user").withJsonBody(Json.obj(
           "email" -> "liviu@ignat.email",
           "password" -> "test123",
