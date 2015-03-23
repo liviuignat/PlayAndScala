@@ -2,9 +2,11 @@ package dao
 
 import business.models.User
 import business.repositories.{FindUsers, IUserRepository}
+import play.api.libs.json.{JsArray, Json}
 import play.modules.reactivemongo.ReactiveMongoPlugin
 import play.modules.reactivemongo.json.collection.JSONCollection
 import play.api.libs.concurrent.Execution.Implicits._
+import reactivemongo.api.Cursor
 
 import scala.concurrent.Future
 import play.api.Play.current
@@ -19,7 +21,10 @@ class UserRepository extends IUserRepository {
 
   private def collection = ReactiveMongoPlugin.db.collection[JSONCollection]("users")
 
-  def getById(id: String) = ???
+  def getById(id: String): Future[Option[User]] = {
+    collection
+      .find(Json.obj("_id" -> id)).one[User]
+  }
 
   override def getAll(query: FindUsers): Future[List[User]] = ???
 

@@ -8,7 +8,7 @@ import scala.concurrent.Future
  * Created by liviuignat on 22/03/15.
  */
 trait IUserRepository {
-  def getById(id: String): Future[User];
+  def getById(id: String): Future[Option[User]];
 
   def getAll(query: FindUsers): Future[List[User]]
 

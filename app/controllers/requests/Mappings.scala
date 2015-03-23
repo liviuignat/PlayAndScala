@@ -8,5 +8,8 @@ import reactivemongo.bson.BSONObjectID
  */
 object Mappings {
   implicit def createUserRequestToUser(req: CreateUserRequest) =
-    User(Some(BSONObjectID.generate), req.email, req.password, req.firstName, req.lastName)
+    User(BSONObjectID.generate.stringify, req.email, req.password, req.firstName, req.lastName)
+
+  implicit def userToGetUserResponse(u: User) =
+    GetUserResponse(u._id, u.email, u.firstName.getOrElse(""), u.lastName.getOrElse(""), u.isActive)
 }
