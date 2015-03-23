@@ -1,6 +1,8 @@
 /**
  * Created by liviu.ignat on 3/23/2015.
  */
+package tests
+
 import org.scalatest.{Tag, FunSpec}
 import scala.collection.mutable
 

@@ -1,12 +1,15 @@
+package test.controllers
+
 import java.util.concurrent.TimeUnit
 
-import org.scalatest.{ShouldMatchers, BeforeAndAfter, BeforeAndAfterAll, FunSpec}
+import org.scalatest._
 import play.api.Play
 import play.api.mvc._
 import play.api.libs.json._
 import play.api.mvc.AnyContentAsJson
 import play.api.test.Helpers._
-import play.api.test.{FakeApplication, FakeRequest}
+import play.api.test._
+import tests._
 
 import scala.concurrent.{Future, Await}
 import scala.concurrent.duration.FiniteDuration

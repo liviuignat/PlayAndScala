@@ -1,3 +1,5 @@
+package business
+
 import org.scalatest.FunSpec
 
 

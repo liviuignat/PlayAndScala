@@ -1,3 +1,5 @@
+package tests
+
 import java.util.concurrent.TimeUnit
 
 import play.api.Application

@@ -1,8 +1,8 @@
 
-import business.repositories.IUserRepository
-import business.services.{SimpleUUIDGenerator, UUIDGenerator}
 import com.tzavellas.sse.guice.ScalaModule
-import dao.UserRepository
+import business.repositories._
+import business.services._
+import dao._
 
 /**
  * Created by liviuignat on 21/03/15.
@@ -10,6 +10,7 @@ import dao.UserRepository
 class Module extends ScalaModule {
   def configure() {
     bind[IUserRepository].to[UserRepository]
-    bind[UUIDGenerator].to[SimpleUUIDGenerator]
+
+    bind[IStringEncriptionService].to[StringEncriptionService]
   }
 }

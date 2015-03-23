@@ -1,7 +1,10 @@
 package dao
 
+import javax.inject.Inject
+
 import business.models.User
 import business.repositories.{FindUsers, IUserRepository}
+import business.services.IStringEncriptionService
 import play.api.libs.json.{JsArray, Json}
 import play.modules.reactivemongo.ReactiveMongoPlugin
 import play.modules.reactivemongo.json.collection.JSONCollection
@@ -17,7 +20,7 @@ import business.models._
 /**
  * Created by liviuignat on 22/03/15.
  */
-class UserRepository extends IUserRepository {
+class UserRepository @Inject() (encriptionService: IStringEncriptionService) extends IUserRepository {
 
   private def collection = ReactiveMongoPlugin.db.collection[JSONCollection]("users")
 
@@ -29,6 +32,7 @@ class UserRepository extends IUserRepository {
   override def getAll(query: FindUsers): Future[List[User]] = ???
 
   def insert(user: User): Future[User] = {
+    user.password = encriptionService.encryptMd5(user.password)
     collection.insert(user).map {
       case ok if ok.ok =>
         user

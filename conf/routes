@@ -6,7 +6,6 @@
 
 # Single endpoint for serving AngularJS
 GET     /                           @controllers.IndexController.index
-GET     /randomUUID                 @controllers.IndexController.randomUUID
 
 # Single page app endpoint
 GET     /app                        @controllers.ApplicationController.index
