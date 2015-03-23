@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "browser-sync": "~1.7.1",
-    "http-proxy": "~1.7.0"
+    "http-proxy": "~1.7.0",
     "karma": "^0.12.31",
     "karma-cli": "0.0.4",
     "protractor": "~1.4.0",
