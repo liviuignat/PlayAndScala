@@ -1,7 +1,5 @@
 package controllers.requests
 
-import play.api.libs.json.Json
-
 /**
  * Created by liviuignat on 22/03/15.
  */

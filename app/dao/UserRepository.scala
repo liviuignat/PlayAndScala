@@ -5,17 +5,15 @@ import javax.inject.Inject
 import business.models.User
 import business.repositories.{FindUsers, IUserRepository}
 import business.services.IStringEncriptionService
-import play.api.libs.json.{JsArray, Json}
+import play.api.libs.json._
 import play.modules.reactivemongo.ReactiveMongoPlugin
 import play.modules.reactivemongo.json.collection.JSONCollection
 import play.api.libs.concurrent.Execution.Implicits._
-import reactivemongo.api.Cursor
 
 import scala.concurrent.Future
 import play.api.Play.current
 
 import business.models.JsonFormats._
-import business.models._
 
 /**
  * Created by liviuignat on 22/03/15.
