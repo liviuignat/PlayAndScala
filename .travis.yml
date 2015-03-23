@@ -14,5 +14,5 @@ before_script:
   - "npm install"
 
 script:
-  - "sbt clean test"
+  - "sbt clean compile test"
   - "./node_modules/.bin/karma start ./app/assets/client/karma.conf.js --browsers Firefox --single-run"
