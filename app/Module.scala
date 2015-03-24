@@ -12,5 +12,7 @@ class Module extends ScalaModule {
     bind[IUserRepository].to[UserRepository]
 
     bind[IStringEncriptionService].to[StringEncriptionService]
+    bind[IRandomStringService].to[RandomStringService]
+    bind[IEmailService].to[EmailService]
   }
 }

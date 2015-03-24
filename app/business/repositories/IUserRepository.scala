@@ -1,6 +1,7 @@
 package business.repositories
 
 import business.models.User
+import common._
 
 import scala.concurrent.Future
 
@@ -16,13 +17,13 @@ trait IUserRepository {
 
   def getAll(query: FindUsers): Future[List[User]]
 
-  def insert(user: User): Future[User]
+  def insert(user: User): Future[LastError]
 
-  def update(user: User): Future[User]
+  def update(user: User): Future[LastError]
 
-  def resetPassword(email: String): Future[Unit]
+  def resetPassword(email: String, newPassword: String): Future[LastError]
 
-  def delete(id: Int): Future[Unit]
+  def delete(id: Int): Future[LastError]
 }
 
 case class FindUsers( email: Option[String],

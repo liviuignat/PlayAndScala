@@ -24,24 +24,31 @@ import controllers.requests.Mappings._
  * Created by liviu.ignat on 3/24/2015.
  */
 @Singleton
-class AuthController @Inject() (encriptionService: IStringEncriptionService, userRepository: IUserRepository)  extends Controller with MongoController {
+class AuthController @Inject() (encriptionService: IStringEncriptionService,
+                                randomStringGenerator: IRandomStringService,
+                                emailService: IEmailService,
+                                userRepository: IUserRepository)  extends Controller with MongoController {
+
   def createUser = Action.async(parse.json) { req =>
     Json.fromJson[CreateUserRequest](req.body).fold(
       invalid => {
         Future.successful(BadRequest(Json.obj("message" -> "Invalid json")))
       },
       createUserRequest => {
+        val user: User = createUserRequest
+        user.password = encriptionService.encryptMd5(user.password)
         val promise = Promise[Result]
 
         userRepository.getByEmail(createUserRequest.email).map({
           case Some(user) => promise success BadRequest(Json.obj("message" -> "User already exists"))
           case None => {
-            /* Automatic implicit conversion defined in requests.Mappings._ */
-            val user: User = createUserRequest
-            user.password = encriptionService.encryptMd5(user.password)
-
             userRepository.insert(user).map(user => user).map {
-              user =>  promise success Created("").withHeaders("Location" -> user._id)
+              case lastError if !lastError.ok() => promise success InternalServerError(Json.obj("message" -> "Internal server error"))
+              case lastError if lastError.ok() => {
+                emailService.sendCreatedAccountEmail(user.email).map {
+                  lastError => promise success Created("").withHeaders("Location" -> user._id)
+                }
+              }
             }
           }
         })
@@ -58,9 +65,9 @@ class AuthController @Inject() (encriptionService: IStringEncriptionService, use
           Future.successful(BadRequest(Json.obj("message" -> "Invalid json")))
         },
         getUserRequest => {
-          val password = encriptionService.encryptMd5(getUserRequest.password)
+          val passwordMd5 = encriptionService.encryptMd5(getUserRequest.password)
 
-          userRepository.getByEmailAndPassword(getUserRequest.email, password).map({
+          userRepository.getByEmailAndPassword(getUserRequest.email, passwordMd5).map({
             case Some(user) => {
               val response: GetUserResponse = user
               val responseJson = Json.toJson(response)
@@ -79,9 +86,21 @@ class AuthController @Inject() (encriptionService: IStringEncriptionService, use
           Future.successful(BadRequest(Json.obj("message" -> "Invalid json")))
         },
         resetPasswordRequest => {
-          userRepository.resetPassword(resetPasswordRequest.email).map({
-            _ => Ok("")
+          val newPassword = randomStringGenerator.randomAlphaNumeric(8)
+          val newMd5Password = encriptionService.encryptMd5(newPassword)
+
+          val promise = Promise[Result]
+
+          userRepository.resetPassword(resetPasswordRequest.email, newMd5Password).map({
+            case lastError if !lastError.ok() => promise success InternalServerError(Json.obj("message" -> "Internal server error"))
+            case lastError if lastError.ok() => {
+              emailService.sendResetPasswordEmail(resetPasswordRequest.email).map {
+                lastError => promise success Ok("")
+              }
+            }
           })
+
+          promise future
         }
       )
   }

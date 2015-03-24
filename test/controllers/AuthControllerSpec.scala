@@ -2,6 +2,8 @@ package test.controllers
 
 import java.util.concurrent.TimeUnit
 
+import business.models._
+import business.models.JsonFormats._
 import org.scalatest._
 import play.api.Play
 import play.api.mvc._
@@ -66,11 +68,15 @@ class AuthControllerSpec extends JasmineSpec with BeforeAndAfter with BeforeAndA
       describe("When getting first user") {
         var response: Option[Future[Result]] = null
         var result: Result = null
+        var getUserResponse: JsValue = null;
+
         beforeEach {
           val uri = s"/api/user/$firstUserId"
           val request = FakeRequest.apply("GET", uri)
           response = route(request)
+
           result = Await.result(response.get, timeout)
+          getUserResponse = contentAsJson(response.get)
         }
 
         it("Should have a defined response") {
@@ -112,6 +118,24 @@ class AuthControllerSpec extends JasmineSpec with BeforeAndAfter with BeforeAndA
             val password = json.\("message")
 
             password.as[String] should equal("User already exists")
+          }
+        }
+
+        describe("When resetting password for first user") {
+          var response: Option[Future[Result]] = null
+          var result: Result = null
+
+          beforeEach {
+            val request = FakeRequest.apply("POST", "/api/auth/resetpassword")
+              .withJsonBody(Json.obj("email" -> "liviu@ignat.email"))
+
+            response = route(request)
+            result = Await.result(response.get, timeout)
+          }
+
+          it("Should be able make the request with success") {
+            response.isDefined should equal(true)
+            result.header.status should equal(OK)
           }
         }
       }

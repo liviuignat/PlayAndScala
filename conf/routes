@@ -22,3 +22,4 @@ PUT     /api/user/:id               @controllers.UsersController.updateUserById(
 # Auth endpoints
 POST    /api/auth/create            @controllers.AuthController.createUser
 POST    /api/auth/login             @controllers.AuthController.login
+POST    /api/auth/resetpassword     @controllers.AuthController.resetPassword

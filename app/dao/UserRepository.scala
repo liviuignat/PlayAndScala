@@ -4,13 +4,12 @@ import javax.inject.Inject
 
 import business.models.User
 import business.repositories.{FindUsers, IUserRepository}
-import business.services.IStringEncriptionService
+import common._
 import play.api.libs.json._
 import play.modules.reactivemongo.ReactiveMongoPlugin
 import play.modules.reactivemongo.json.collection.JSONCollection
 import play.api.libs.concurrent.Execution.Implicits._
 import reactivemongo.api.Cursor
-import reactivemongo.api.indexes.{Index, IndexType}
 
 import scala.concurrent.Future
 import play.api.Play.current
@@ -35,7 +34,7 @@ class UserRepository @Inject() () extends IUserRepository {
     "lastName" -> IndexType.Ascending), unique = false))
 */
 
-  def getById(id: String): Future[Option[User]] = {
+  override def getById(id: String): Future[Option[User]] = {
     collection
       .find(Json.obj("_id" -> id)).one[User]
   }
@@ -45,12 +44,12 @@ class UserRepository @Inject() () extends IUserRepository {
       .find(Json.obj("email" -> email)).one[User]
   }
 
-  def getByEmailAndPassword(email: String, password: String): Future[Option[User]] = {
+  override def getByEmailAndPassword(email: String, password: String): Future[Option[User]] = {
     collection
       .find(Json.obj("email" -> email, "password" -> password, "active" -> true)).one[User]
   }
 
-  def getAll(query: FindUsers): Future[List[User]] = {
+  override def getAll(query: FindUsers): Future[List[User]] = {
     val cursor: Cursor[User] = collection.
       find(Json.obj("active" -> true)).
       cursor[User]
@@ -58,17 +57,26 @@ class UserRepository @Inject() () extends IUserRepository {
     cursor.collect[List]()
   }
 
-  def insert(user: User): Future[User] = {
+  override def insert(user: User): Future[LastError] = {
     collection.insert(user).map {
       case ok if ok.ok =>
-        user
-      case error => throw new RuntimeException(error.message)
+        NoError()
+      case error => Error(Some(new RuntimeException(error.message)))
     }
   }
 
-  def update(user: User): Future[User] = ???
+  override def update(user: User): Future[LastError] = ???
 
-  override def resetPassword(email: String): Future[Unit] = ???
+  override def resetPassword(email: String, newPassword: String): Future[LastError] = {
+    val selector = Json.obj("email" -> email)
+    val modifier = Json.obj("$set" -> Json.obj("password" -> newPassword))
 
-  def delete(id: Int): Future[Unit] = ???
+    collection.update(selector, modifier, multi = true).map {
+      case ok if ok.ok =>
+        NoError()
+      case error => Error(Some(new RuntimeException(error.message)))
+    }
+  }
+
+  override def delete(id: Int): Future[LastError] = ???
 }
