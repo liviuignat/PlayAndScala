@@ -1,4 +1,4 @@
-package controllers.requests
+package controllers.requests.user
 
 /**
  * Created by liviu.ignat on 3/23/2015.
