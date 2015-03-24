@@ -9,6 +9,8 @@ import play.api.libs.json._
 import play.modules.reactivemongo.ReactiveMongoPlugin
 import play.modules.reactivemongo.json.collection.JSONCollection
 import play.api.libs.concurrent.Execution.Implicits._
+import reactivemongo.api.Cursor
+import reactivemongo.api.indexes.{Index, IndexType}
 
 import scala.concurrent.Future
 import play.api.Play.current
@@ -18,19 +20,40 @@ import business.models.JsonFormats._
 /**
  * Created by liviuignat on 22/03/15.
  */
-class UserRepository @Inject() (encriptionService: IStringEncriptionService) extends IUserRepository {
+class UserRepository @Inject() () extends IUserRepository {
 
-  private def collection = ReactiveMongoPlugin.db.collection[JSONCollection]("users")
+  private def collection = ReactiveMongoPlugin.db
+    .collection[JSONCollection]("app_users")
+/*
+  Causes some problems on reactive mongo - for sure some permissions
+
+  collection.indexesManager.ensure(Index(List(
+    "email" -> IndexType.Ascending), unique = false))
+  collection.indexesManager.ensure(Index(List(
+    "firstName" -> IndexType.Ascending), unique = false))
+  collection.indexesManager.ensure(Index(List(
+    "lastName" -> IndexType.Ascending), unique = false))
+*/
 
   def getById(id: String): Future[Option[User]] = {
     collection
       .find(Json.obj("_id" -> id)).one[User]
   }
 
-  override def getAll(query: FindUsers): Future[List[User]] = ???
+  def getByEmailAndPassword(email: String, password: String): Future[Option[User]] = {
+    collection
+      .find(Json.obj("email" -> email, "password" -> password, "active" -> true)).one[User]
+  }
+
+  def getAll(query: FindUsers): Future[List[User]] = {
+    val cursor: Cursor[User] = collection.
+      find(Json.obj("active" -> true)).
+      cursor[User]
+
+    cursor.collect[List]()
+  }
 
   def insert(user: User): Future[User] = {
-    user.password = encriptionService.encryptMd5(user.password)
     collection.insert(user).map {
       case ok if ok.ok =>
         user
@@ -40,5 +63,5 @@ class UserRepository @Inject() (encriptionService: IStringEncriptionService) ext
 
   def update(user: User): Future[User] = ???
 
-  override def delete(id: Int): Unit = ???
+  def delete(id: Int): Unit = ???
 }

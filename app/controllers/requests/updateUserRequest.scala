@@ -6,6 +6,6 @@ import play.api.libs.json.Json
  * Created by liviuignat on 22/03/15.
  */
 case class UpdateUserRequest(
-                _id: Option[String],
-                firstName: Option[String],
-                lastName: Option[String])
+                var id: Option[String],
+                var firstName: Option[String],
+                var lastName: Option[String])

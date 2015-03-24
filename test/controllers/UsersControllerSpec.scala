@@ -35,7 +35,7 @@ class UsersControllerSpec extends JasmineSpec with BeforeAndAfter with BeforeAnd
       var response: Option[Future[Result]] = null
       var result: Result = null
       beforeEach {
-        val request = FakeRequest.apply("POST", "/user")
+        val request = FakeRequest.apply("POST", "/api/auth/create")
           .withJsonBody(Json.obj(
           "email" -> "liviu@ignat.email",
           "password" -> "test123",
@@ -67,8 +67,8 @@ class UsersControllerSpec extends JasmineSpec with BeforeAndAfter with BeforeAnd
         var response: Option[Future[Result]] = null
         var result: Result = null
         beforeEach {
-          val uri = s"/user/$firstUserId"
-          val request = FakeRequest.apply("PUT", uri)
+          val uri = s"/api/user/$firstUserId"
+          val request = FakeRequest.apply("GET", uri)
           response = route(request)
           result = Await.result(response.get, timeout)
         }
@@ -92,7 +92,7 @@ class UsersControllerSpec extends JasmineSpec with BeforeAndAfter with BeforeAnd
       describe("When wanting to insert a second user") {
         var response: Option[Future[Result]] = null
         beforeEach {
-          val request = FakeRequest.apply("POST", "/user")
+          val request = FakeRequest.apply("POST", "/api/auth/create")
             .withJsonBody(Json.obj(
             "email" -> "liviu.ignat@someotheremail.com",
             "password" -> "someotheremailtest123",

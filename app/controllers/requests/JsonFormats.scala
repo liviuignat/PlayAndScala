@@ -8,5 +8,6 @@ import play.api.libs.json.Json
 object JsonFormats {
   implicit val createUserRequestFormat = Json.format[CreateUserRequest]
   implicit val getUserResponseFormat = Json.format[GetUserResponse]
+  implicit val getUserByEmailAndPasswordFormat = Json.format[GetUserByEmailAndPassword]
   implicit val updateUserRequestFormat = Json.format[UpdateUserRequest]
 }

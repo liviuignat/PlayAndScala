@@ -3,7 +3,8 @@ package controllers
 import javax.inject.{Inject, Singleton}
 
 import business.repositories.IUserRepository
-import controllers.requests.{GetUserResponse, CreateUserRequest}
+import business.services._
+import controllers.requests._
 import org.slf4j.{Logger, LoggerFactory}
 import play.api.libs.json.Json
 import play.api.libs.json._
@@ -22,7 +23,7 @@ import requests.Mappings._
  */
 
 @Singleton
-class UsersController @Inject() (userRepository: IUserRepository)  extends Controller with MongoController {
+class UsersController @Inject() (encriptionService: IStringEncriptionService, userRepository: IUserRepository)  extends Controller with MongoController {
   private final val logger: Logger = LoggerFactory.getLogger(classOf[UsersController])
 
   def createUser = Action.async(parse.json) { req =>
@@ -33,10 +34,26 @@ class UsersController @Inject() (userRepository: IUserRepository)  extends Contr
       createUserRequest => {
         /* Automatic implicit conversion defined in requests.Mappings._ */
         val user: User = createUserRequest
+        user.password = encriptionService.encryptMd5(user.password)
 
-        userRepository.insert(user).map(_ => {
-          Created("")
-            .withHeaders("Location" -> user._id)
+        userRepository.insert(user).map({
+          user => Created("").withHeaders("Location" -> user._id)
+        })
+      }
+    )
+  }
+
+  def updateUserById(id: String) = Action.async(parse.json) { req =>
+    Json.fromJson[UpdateUserRequest](req.body).fold(
+      invalid => {
+        Future.successful(BadRequest(Json.obj("message" -> "Invalid json")))
+      },
+      updateUserRequest => {
+        updateUserRequest.id = Some(id)
+        val user: User = updateUserRequest
+
+        userRepository.update(user).map({
+          user => Ok("")
         })
       }
     )
@@ -51,5 +68,26 @@ class UsersController @Inject() (userRepository: IUserRepository)  extends Contr
       }
       case None => NotFound(Json.obj("message" -> "No such item"))
     }
+  }
+
+  def getByEmailAndPassword() = Action.async(parse.json) {
+    req =>
+      Json.fromJson[GetUserByEmailAndPassword](req.body).fold(
+        invalid => {
+          Future.successful(BadRequest(Json.obj("message" -> "Invalid json")))
+        },
+        getUserRequest => {
+          val password = encriptionService.encryptMd5(getUserRequest.password)
+
+          userRepository.getByEmailAndPassword(getUserRequest.email, password).map({
+            case Some(user) => {
+              val response: GetUserResponse = user
+              val responseJson = Json.toJson(response)
+              Ok(responseJson)
+            }
+            case None => NotFound(Json.obj("message" -> "No such item"))
+          })
+        }
+      )
   }
 }

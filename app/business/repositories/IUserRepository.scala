@@ -8,16 +8,19 @@ import scala.concurrent.Future
  * Created by liviuignat on 22/03/15.
  */
 trait IUserRepository {
-  def getById(id: String): Future[Option[User]];
+  def getById(id: String): Future[Option[User]]
+
+  def getByEmailAndPassword(email: String, password: String): Future[Option[User]]
 
   def getAll(query: FindUsers): Future[List[User]]
 
-  def insert(user: User): Future[User];
+  def insert(user: User): Future[User]
 
-  def update(user: User): Future[User];
+  def update(user: User): Future[User]
 
-  def delete(id: Int): Unit;
+  def delete(id: Int): Unit
 }
 
-
-case class FindUsers(userName: String)
+case class FindUsers( email: Option[String],
+                      firstName: Option[String],
+                      lastName: Option[String])
