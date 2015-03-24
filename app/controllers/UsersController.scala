@@ -1,6 +1,7 @@
 package controllers
 
 import javax.inject._
+import controllers.requests.user.{GetUserResponse, UpdateUserRequest}
 import org.slf4j._
 import play.api.libs.json.Json
 import play.api.mvc._

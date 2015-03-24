@@ -47,22 +47,6 @@ class UsersControllerSpec extends JasmineSpec with BeforeAndAfter with BeforeAnd
         firstUserId = result.header.headers.get("Location").get
       }
 
-      it("Should be able to the request with success") {
-        response.isDefined should equal(true)
-      }
-
-      it("Should have the Status Header Created") {
-        result.header.status should equal(CREATED)
-      }
-
-      it("Should have the Location header defined") {
-        assert(result.header.headers.contains("Location") == true)
-      }
-
-      it("Should have the Location header with length 24") {
-        result.header.headers.get("Location").get.length should equal(24)
-      }
-
       describe("When getting first user") {
         var response: Option[Future[Result]] = null
         var result: Result = null
@@ -81,32 +65,11 @@ class UsersControllerSpec extends JasmineSpec with BeforeAndAfter with BeforeAnd
           result.header.status should equal(OK)
         }
 
-        it("Json response should not contain password") {
+        it("Should not have response password undefined") {
           val json: JsValue = contentAsJson(response.get)
           val password = json.\("password")
 
           assert(password.getClass == (new JsUndefined("")).getClass)
-        }
-      }
-
-      describe("When wanting to insert a second user") {
-        var response: Option[Future[Result]] = null
-        beforeEach {
-          val request = FakeRequest.apply("POST", "/api/auth/create")
-            .withJsonBody(Json.obj(
-            "email" -> "liviu.ignat@someotheremail.com",
-            "password" -> "someotheremailtest123",
-            "firstName" -> "Liviu Marius",
-            "lastName" -> "Ignat Someother"))
-          response = route(request)
-          val result = Await.result(response.get, timeout)
-        }
-
-        it("Should be able make the request with success") {
-          response.isDefined should equal(true)
-
-          val result = Await.result(response.get, timeout)
-          result.header.status should equal(CREATED)
         }
       }
     }

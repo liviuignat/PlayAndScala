@@ -40,6 +40,11 @@ class UserRepository @Inject() () extends IUserRepository {
       .find(Json.obj("_id" -> id)).one[User]
   }
 
+  override def getByEmail(email: String): Future[Option[User]] = {
+    collection
+      .find(Json.obj("email" -> email)).one[User]
+  }
+
   def getByEmailAndPassword(email: String, password: String): Future[Option[User]] = {
     collection
       .find(Json.obj("email" -> email, "password" -> password, "active" -> true)).one[User]
@@ -63,5 +68,7 @@ class UserRepository @Inject() () extends IUserRepository {
 
   def update(user: User): Future[User] = ???
 
-  def delete(id: Int): Unit = ???
+  override def resetPassword(email: String): Future[Unit] = ???
+
+  def delete(id: Int): Future[Unit] = ???
 }

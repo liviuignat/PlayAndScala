@@ -16,4 +16,5 @@ libraryDependencies ++= Seq(
   "javax.inject" % "javax.inject" % "1",
   "org.mockito" % "mockito-core" % "1.10.17" % "test",
   "org.scalatest" % "scalatest_2.11" % "2.2.1" % "test",
+  "org.scala-tools.testing" %% "scalacheck" % "1.9" % "test",
   "com.novocode" % "junit-interface" % "0.9" % "test")

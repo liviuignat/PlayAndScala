@@ -81,16 +81,44 @@ class AuthControllerSpec extends JasmineSpec with BeforeAndAfter with BeforeAndA
           result.header.status should equal(OK)
         }
 
-        it("Json response should not contain password") {
-          val json: JsValue = contentAsJson(response.get)
-          val password = json.\("password")
+        describe("When wanting to insert the same user email") {
+          var response: Option[Future[Result]] = null
+          var result: Result = null
+          beforeEach {
+            val request = FakeRequest.apply("POST", "/api/auth/create")
+              .withJsonBody(Json.obj(
+              "email" -> "liviu@ignat.email",
+              "password" -> "anothertest123",
+              "firstName" -> "Liviu",
+              "lastName" -> "Ignat"))
+            response = route(request)
+            result = Await.result(response.get, timeout)
+          }
 
-          assert(password.getClass == (new JsUndefined("")).getClass)
+          it("Should be able make the request with success") {
+            response.isDefined should equal(true)
+            result.header.status should equal(BAD_REQUEST)
+          }
+
+          it("Should not have response message undefined") {
+            val json: JsValue = contentAsJson(response.get)
+            val password = json.\("message")
+
+            assert(password.getClass != (new JsUndefined("")).getClass)
+          }
+
+          it("Should have message equal to 'User already exists'") {
+            val json: JsValue = contentAsJson(response.get)
+            val password = json.\("message")
+
+            password.as[String] should equal("User already exists")
+          }
         }
       }
 
       describe("When wanting to insert a second user") {
         var response: Option[Future[Result]] = null
+        var result: Result = null
         beforeEach {
           val request = FakeRequest.apply("POST", "/api/auth/create")
             .withJsonBody(Json.obj(
@@ -99,13 +127,11 @@ class AuthControllerSpec extends JasmineSpec with BeforeAndAfter with BeforeAndA
             "firstName" -> "Liviu Marius",
             "lastName" -> "Ignat Someother"))
           response = route(request)
-          val result = Await.result(response.get, timeout)
+          result = Await.result(response.get, timeout)
         }
 
         it("Should be able make the request with success") {
           response.isDefined should equal(true)
-
-          val result = Await.result(response.get, timeout)
           result.header.status should equal(CREATED)
         }
       }

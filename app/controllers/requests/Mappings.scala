@@ -1,6 +1,8 @@
 package controllers.requests
 
 import business.models.User
+import controllers.requests.auth.CreateUserRequest
+import controllers.requests.user.{GetUserResponse, UpdateUserRequest}
 import reactivemongo.bson.BSONObjectID
 
 /**

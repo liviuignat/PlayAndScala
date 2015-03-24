@@ -1,20 +1,22 @@
 package controllers
 
 import javax.inject._
+import controllers.requests.user.GetUserResponse
 import play.api.libs.json.Json
 import play.api.mvc._
 import play.api.libs.concurrent.Execution.Implicits._
 import play.modules.reactivemongo.MongoController
 
-import scala.concurrent.Future
+import scala.concurrent._
 
 import business.repositories._
 import business.services._
 import business.models._
 
-import requests._
-import requests.JsonFormats._
-import requests.Mappings._
+
+import controllers.requests.auth._
+import controllers.requests.JsonFormats._
+import controllers.requests.Mappings._
 
 
 
@@ -29,20 +31,29 @@ class AuthController @Inject() (encriptionService: IStringEncriptionService, use
         Future.successful(BadRequest(Json.obj("message" -> "Invalid json")))
       },
       createUserRequest => {
-        /* Automatic implicit conversion defined in requests.Mappings._ */
-        val user: User = createUserRequest
-        user.password = encriptionService.encryptMd5(user.password)
+        val promise = Promise[Result]
 
-        userRepository.insert(user).map({
-          user => Created("").withHeaders("Location" -> user._id)
+        userRepository.getByEmail(createUserRequest.email).map({
+          case Some(user) => promise success BadRequest(Json.obj("message" -> "User already exists"))
+          case None => {
+            /* Automatic implicit conversion defined in requests.Mappings._ */
+            val user: User = createUserRequest
+            user.password = encriptionService.encryptMd5(user.password)
+
+            userRepository.insert(user).map(user => user).map {
+              user =>  promise success Created("").withHeaders("Location" -> user._id)
+            }
+          }
         })
+
+        promise future
       }
     )
   }
 
   def login() = Action.async(parse.json) {
     req =>
-      Json.fromJson[GetUserByEmailAndPassword](req.body).fold(
+      Json.fromJson[LoginRequest](req.body).fold(
         invalid => {
           Future.successful(BadRequest(Json.obj("message" -> "Invalid json")))
         },
@@ -56,6 +67,20 @@ class AuthController @Inject() (encriptionService: IStringEncriptionService, use
               Ok(responseJson)
             }
             case None => NotFound(Json.obj("message" -> "No such item"))
+          })
+        }
+      )
+  }
+
+  def resetPassword() = Action.async(parse.json) {
+    req =>
+      Json.fromJson[ResetPasswordRequest](req.body).fold(
+        invalid => {
+          Future.successful(BadRequest(Json.obj("message" -> "Invalid json")))
+        },
+        resetPasswordRequest => {
+          userRepository.resetPassword(resetPasswordRequest.email).map({
+            _ => Ok("")
           })
         }
       )

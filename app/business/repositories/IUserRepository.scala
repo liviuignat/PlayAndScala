@@ -10,6 +10,8 @@ import scala.concurrent.Future
 trait IUserRepository {
   def getById(id: String): Future[Option[User]]
 
+  def getByEmail(email: String): Future[Option[User]]
+
   def getByEmailAndPassword(email: String, password: String): Future[Option[User]]
 
   def getAll(query: FindUsers): Future[List[User]]
@@ -18,7 +20,9 @@ trait IUserRepository {
 
   def update(user: User): Future[User]
 
-  def delete(id: Int): Unit
+  def resetPassword(email: String): Future[Unit]
+
+  def delete(id: Int): Future[Unit]
 }
 
 case class FindUsers( email: Option[String],
