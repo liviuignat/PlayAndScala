@@ -79,7 +79,19 @@ class UserRepository @Inject() () extends IUserRepository {
     }
   }
 
-  override def update(user: User): Future[LastError] = ???
+  override def update(user: User): Future[LastError] = {
+    val selector = Json.obj("_id" -> user._id)
+    val jsonToUpdate = Json.obj(
+      "firstName" -> user.firstName,
+      "lastName" -> user.lastName)
+    val modifier = Json.obj("$set" -> jsonToUpdate)
+
+    collection.update(selector, modifier, multi = true).map {
+      case ok if ok.ok =>
+        NoError()
+      case error => Error(Some(new RuntimeException(error.message)))
+    }
+  }
 
   override def resetPassword(email: String, newPassword: String): Future[LastError] = {
     val selector = Json.obj("email" -> email)
