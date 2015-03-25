@@ -208,6 +208,38 @@ class UsersControllerSpec extends JasmineSpec with BeforeAndAfter with BeforeAnd
             }
           }
         }
+
+        describe("When delete user") {
+          var response: Option[Future[Result]] = null
+          var result: Result = null
+
+          beforeEach {
+            val request = FakeRequest.apply("DELETE", s"/api/user/$firstUserId")
+            response = route(request)
+            result = Await.result(response.get, timeout)
+          }
+
+          it("Should work with success") {
+            response.isDefined should equal(true)
+            result.header.status should equal(OK)
+          }
+
+          describe("When getting the user") {
+            var response: Option[Future[Result]] = null
+            var result: Result = null
+            beforeEach {
+              val uri = s"/api/user/$firstUserId"
+              val request = FakeRequest.apply("GET", uri)
+              response = route(request)
+              result = Await.result(response.get, timeout)
+            }
+
+            it("Should not find that user anymore") {
+              response.isDefined should equal(true)
+              result.header.status should equal(NOT_FOUND)
+            }
+          }
+        }
       }
     }
   }

@@ -64,9 +64,17 @@ class UsersController @Inject() (encriptionService: IStringEncriptionService, us
         val user: User = updateUserRequest
 
         userRepository.update(user).map({
-          user => Ok("")
+          case lastError if lastError.ok() => Ok("")
+          case lastError if !lastError.ok() => InternalServerError(Json.obj("message" -> "Internal server error"))
         })
       }
     )
+  }
+
+  def deleteUserById(id: String) = Action.async {
+      userRepository.delete(id).map({
+        case lastError if lastError.ok() => Ok("")
+        case lastError if !lastError.ok() => InternalServerError(Json.obj("message" -> "Internal server error"))
+      })
   }
 }

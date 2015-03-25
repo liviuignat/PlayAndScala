@@ -23,5 +23,5 @@ trait IUserRepository {
 
   def resetPassword(email: String, newPassword: String): Future[LastError]
 
-  def delete(id: Int): Future[LastError]
+  def delete(id: String): Future[LastError]
 }

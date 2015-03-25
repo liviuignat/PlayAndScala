@@ -104,5 +104,13 @@ class UserRepository @Inject() () extends IUserRepository {
     }
   }
 
-  override def delete(id: Int): Future[LastError] = ???
+  override def delete(id: String): Future[LastError] = {
+    val selector = Json.obj("_id" -> id)
+
+    collection.remove(selector).map {
+      case ok if ok.ok =>
+        NoError()
+      case error => Error(Some(new RuntimeException(error.message)))
+    }
+  }
 }

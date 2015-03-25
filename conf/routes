@@ -19,6 +19,7 @@ GET     /assets/*file               controllers.Assets.at(path="/public/dev/asse
 GET     /api/user                   @controllers.UsersController.getUserSearch()
 GET     /api/user/:id               @controllers.UsersController.getUserById(id: String)
 PUT     /api/user/:id               @controllers.UsersController.updateUserById(id: String)
+DELETE  /api/user/:id               @controllers.UsersController.deleteUserById(id: String)
 
 # Auth endpoints
 POST    /api/auth/create            @controllers.AuthController.createUser
