@@ -2,11 +2,10 @@ package tests
 
 import java.util.concurrent.TimeUnit
 
-import play.api.Application
+import play.api.{Play, Application}
 import play.api.test.FakeApplication
 import play.api.test.Helpers._
-import play.modules.reactivemongo.ReactiveMongoPlugin
-import play.modules.reactivemongo.json.collection.JSONCollection
+import play.api.Play.current
 import reactivemongo.api.{DefaultDB, MongoConnection, MongoDriver}
 
 import scala.concurrent.duration.FiniteDuration
@@ -30,14 +29,16 @@ object ProjectTestUtils {
   }
 
   def dbConnection: DefaultDB = {
-    val uri = "mongodb://scalaplaymongo:scalaplaymongo123@ds045521.mongolab.com:45521/heroku_app35066918"
+    val uri = Play.configuration.getString("mongodb.uri").get
+    val dbName = Play.configuration.getString("mongodb.dbName").get
+
     val driver = new MongoDriver
     val connection: Try[MongoConnection] =
       MongoConnection.parseURI(uri).map { parsedUri =>
         driver.connection(parsedUri)
       }
 
-    connection.get.db("heroku_app35066918")
+    connection.get.db(dbName)
   }
 
   def dropDb(): Boolean = {
