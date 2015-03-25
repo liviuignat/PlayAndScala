@@ -40,14 +40,13 @@ class UsersController @Inject() (encriptionService: IStringEncriptionService, us
 
   def getUserSearch() = Action.async(parse.anyContent) {
     req => {
-      val queryString = req.queryString.map {case(k,v) => k->v.headOption}
       val query = req.getQueryString("q");
 
       userRepository.getAll(query).map({
         users => {
           val response: List[GetUserResponse] = users.map(user => {
-            val response: GetUserResponse = user
-            response
+            val userResponse: GetUserResponse = user
+            userResponse
           })
           Ok(Json.toJson(response))
         }

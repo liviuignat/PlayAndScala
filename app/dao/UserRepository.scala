@@ -10,11 +10,14 @@ import play.modules.reactivemongo.ReactiveMongoPlugin
 import play.modules.reactivemongo.json.collection.JSONCollection
 import play.api.libs.concurrent.Execution.Implicits._
 import reactivemongo.api.Cursor
+import reactivemongo.bson.BSONRegex
 
 import scala.concurrent.Future
 import play.api.Play.current
 
 import business.models.JsonFormats._
+
+import scala.util.matching.Regex
 
 /**
  * Created by liviuignat on 22/03/15.
@@ -36,28 +39,32 @@ class UserRepository @Inject() () extends IUserRepository {
 
   override def getById(id: String): Future[Option[User]] = {
     collection
-      .find(Json.obj("_id" -> id)).one[User]
+      .find(Json.obj("_id" -> id,"isActive" -> true)).one[User]
   }
 
   override def getByEmail(email: String): Future[Option[User]] = {
-    val selector = Json.obj("email" -> email)
+    val selector =  Json.obj("email" -> email, "isActive" -> true)
     collection.find(selector).one[User]
   }
 
   override def getByEmailAndPassword(email: String, password: String): Future[Option[User]] = {
-    val selector = Json.obj("$and" -> Json.obj(
-        "email" -> email,
-        "password" -> password,
-        "active" -> true))
-
+    val selector =  Json.obj("email" -> email, "password" -> password, "isActive" -> true)
     collection.find(selector).one[User]
   }
 
   override def getAll(query: Option[String]): Future[List[User]] = {
-    val selector = Json.obj("$or" -> Json.obj(
-      "firstName" -> query,
-      "lastName" -> query,
-      "active" -> true))
+
+    val selector = query match {
+      case None => Json.obj()
+      case Some("") => Json.obj()
+      case Some(query) => {
+        val regex = Json.obj("$regex" -> (".*" + query + ".*"), "$options" -> "-i")
+        Json.obj("$or" -> Seq(
+          Json.obj("firstName" -> regex),
+          Json.obj("lastName" -> regex)
+        ))
+      }
+    };
 
     val cursor: Cursor[User] = collection.find(selector).cursor[User]
 

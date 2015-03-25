@@ -16,6 +16,7 @@ GET     /bower_components/*file     controllers.Assets.at(path="/public/bower_co
 GET     /assets/*file               controllers.Assets.at(path="/public/dev/assets", file)
 
 # Users endpoints
+GET     /api/user                   @controllers.UsersController.getUserSearch()
 GET     /api/user/:id               @controllers.UsersController.getUserById(id: String)
 PUT     /api/user/:id               @controllers.UsersController.updateUserById(id: String)
 

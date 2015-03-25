@@ -65,15 +65,13 @@ class AuthController @Inject() (encriptionService: IStringEncriptionService,
           Future.successful(BadRequest(Json.obj("message" -> "Invalid json")))
         },
         getUserRequest => {
-          val passwordMd5 = encriptionService.encryptMd5(getUserRequest.password)
-
-          userRepository.getByEmailAndPassword(getUserRequest.email, passwordMd5).map({
+          userRepository.getByEmailAndPassword(getUserRequest.email, getUserRequest.password).map({
             case Some(user) => {
               val response: GetUserResponse = user
               val responseJson = Json.toJson(response)
               Ok(responseJson)
             }
-            case None => NotFound(Json.obj("message" -> "No such item"))
+            case None => BadRequest(Json.obj("message" -> "No such item"))
           })
         }
       )

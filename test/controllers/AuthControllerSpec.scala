@@ -65,6 +65,46 @@ class AuthControllerSpec extends JasmineSpec with BeforeAndAfter with BeforeAndA
         result.header.headers.get("Location").get.length should equal(24)
       }
 
+      describe("When trying to login with correct credentials") {
+        var response: Option[Future[Result]] = null
+        var result: Result = null
+
+        beforeEach {
+          val request = FakeRequest.apply("POST", "/api/auth/login")
+            .withJsonBody(Json.obj(
+            "email" -> "liviu@ignat.email",
+            "password" -> "cc03e747a6afbbcbf8be7668acfebee5"))
+
+          response = route(request)
+          result = Await.result(response.get, timeout)
+        }
+
+        it("Should be able to the request with success") {
+          response.isDefined should equal(true)
+          result.header.status should equal(OK)
+        }
+      }
+
+      describe("When trying to login with false credentials") {
+        var response: Option[Future[Result]] = null
+        var result: Result = null
+
+        beforeEach {
+          val request = FakeRequest.apply("POST", "/api/auth/login")
+            .withJsonBody(Json.obj(
+            "email" -> "liviu@ignat.email",
+            "password" -> "blahblah"))
+
+          response = route(request)
+          result = Await.result(response.get, timeout)
+        }
+
+        it("Should NOT be able to the request with success") {
+          response.isDefined should equal(true)
+          result.header.status should equal(BAD_REQUEST)
+        }
+      }
+
       describe("When getting first user") {
         var response: Option[Future[Result]] = null
         var result: Result = null
