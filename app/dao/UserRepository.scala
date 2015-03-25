@@ -3,7 +3,7 @@ package dao
 import javax.inject.Inject
 
 import business.models.User
-import business.repositories.{FindUsers, IUserRepository}
+import business.repositories._
 import common._
 import play.api.libs.json._
 import play.modules.reactivemongo.ReactiveMongoPlugin
@@ -40,19 +40,26 @@ class UserRepository @Inject() () extends IUserRepository {
   }
 
   override def getByEmail(email: String): Future[Option[User]] = {
-    collection
-      .find(Json.obj("email" -> email)).one[User]
+    val selector = Json.obj("email" -> email)
+    collection.find(selector).one[User]
   }
 
   override def getByEmailAndPassword(email: String, password: String): Future[Option[User]] = {
-    collection
-      .find(Json.obj("email" -> email, "password" -> password, "active" -> true)).one[User]
+    val selector = Json.obj("$and" -> Json.obj(
+        "email" -> email,
+        "password" -> password,
+        "active" -> true))
+
+    collection.find(selector).one[User]
   }
 
-  override def getAll(query: FindUsers): Future[List[User]] = {
-    val cursor: Cursor[User] = collection.
-      find(Json.obj("active" -> true)).
-      cursor[User]
+  override def getAll(query: Option[String]): Future[List[User]] = {
+    val selector = Json.obj("$or" -> Json.obj(
+      "firstName" -> query,
+      "lastName" -> query,
+      "active" -> true))
+
+    val cursor: Cursor[User] = collection.find(selector).cursor[User]
 
     cursor.collect[List]()
   }

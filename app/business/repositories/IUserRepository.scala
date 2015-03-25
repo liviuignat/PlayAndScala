@@ -15,7 +15,7 @@ trait IUserRepository {
 
   def getByEmailAndPassword(email: String, password: String): Future[Option[User]]
 
-  def getAll(query: FindUsers): Future[List[User]]
+  def getAll(query: Option[String]): Future[List[User]]
 
   def insert(user: User): Future[LastError]
 
@@ -25,7 +25,3 @@ trait IUserRepository {
 
   def delete(id: Int): Future[LastError]
 }
-
-case class FindUsers( email: Option[String],
-                      firstName: Option[String],
-                      lastName: Option[String])

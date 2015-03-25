@@ -101,7 +101,7 @@ class AuthControllerSpec extends JasmineSpec with BeforeAndAfter with BeforeAndA
             result = Await.result(response.get, timeout)
           }
 
-          it("Should be able make the request with success") {
+          it("Should fail the request") {
             response.isDefined should equal(true)
             result.header.status should equal(BAD_REQUEST)
           }
