@@ -4,6 +4,9 @@ scala:
 node_js:
   - 0.10
 
+services:
+  - mongodb
+
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
@@ -14,5 +17,6 @@ before_script:
   - "npm install"
 
 script:
-  - "sbt clean compile test"
+  - sleep 15
+  - "sbt clean test"
   - "./node_modules/.bin/karma start ./app/assets/client/karma.conf.js --browsers Firefox --single-run"
