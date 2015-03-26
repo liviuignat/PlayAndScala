@@ -5,16 +5,20 @@ angular.module('app', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngRes
 
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
-      .when('/', {
+      .when('/login', {
         templateUrl: 'app/auth/login/login.tpl.html',
         controller: 'LoginController'
+      })
+      .when('/register', {
+        templateUrl: 'app/auth/createaccount/createaccount.tpl.html',
+        controller: 'CreateAccountController'
       })
       .when('/resetpassword', {
         templateUrl: 'app/auth/resetpassword/resetpassword.tpl.html',
         controller: 'ResetPasswordController'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/login'
       });
 
     $locationProvider.html5Mode(true).hashPrefix('!');

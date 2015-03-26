@@ -1,14 +1,10 @@
  /*jshint esnext: true */
-(function (app) {
-  'use strict';
-
-  class ResetPasswordController {
-    constructor ($scope) {
-      $scope.email = 'liviu@ignat.email';
-    }
+class ResetPasswordController {
+  constructor ($scope) {
+    $scope.email = 'liviu@ignat.email';
   }
+}
 
-  ResetPasswordController.$inject = ['$scope'];
-  app.controller('ResetPasswordController', ResetPasswordController);
-
-}(angular.module('app')));
+ResetPasswordController.$inject = ['$scope'];
+angular.module('app')
+  .controller('ResetPasswordController', ResetPasswordController);
