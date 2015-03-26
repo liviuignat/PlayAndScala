@@ -55,10 +55,7 @@ class UsersController @Inject() (encriptionService: IStringEncriptionService, us
   }
 
   def updateUserById(id: String) = Action.async(parse.json) { req =>
-    Json.fromJson[UpdateUserRequest](req.body).fold(
-      invalid => {
-        Future.successful(BadRequest(Json.obj("message" -> "Invalid json")))
-      },
+    req.body.validate[UpdateUserRequest].map {
       updateUserRequest => {
         updateUserRequest.id = Some(id)
         val user: User = updateUserRequest
@@ -68,13 +65,13 @@ class UsersController @Inject() (encriptionService: IStringEncriptionService, us
           case lastError if !lastError.ok() => InternalServerError(Json.obj("message" -> "Internal server error"))
         })
       }
-    )
+    }.getOrElse(Future.successful(BadRequest(Json.obj("message" -> "Invalid json"))))
   }
 
   def deleteUserById(id: String) = Action.async {
-      userRepository.delete(id).map({
-        case lastError if lastError.ok() => Ok("")
-        case lastError if !lastError.ok() => InternalServerError(Json.obj("message" -> "Internal server error"))
-      })
+    userRepository.delete(id).map({
+      case lastError if lastError.ok() => Ok("")
+      case lastError if !lastError.ok() => InternalServerError(Json.obj("message" -> "Internal server error"))
+    })
   }
 }
