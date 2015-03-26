@@ -34,23 +34,20 @@ class AuthController @Inject() (encriptionService: IStringEncriptionService,
       createUserRequest => {
         val user: User = createUserRequest
         user.password = encriptionService.encryptMd5(user.password)
-        val promise = Promise[Result]
 
-        userRepository.getByEmail(createUserRequest.email).map({
-          case Some(user) => promise success BadRequest(Json.obj("message" -> "User already exists"))
+        userRepository.getByEmail(createUserRequest.email).flatMap {
+          case Some(user) => Future.successful(BadRequest(Json.obj("message" -> "User already exists")))
           case None => {
-            userRepository.insert(user).map(user => user).map {
-              case lastError if !lastError.ok() => promise success InternalServerError(Json.obj("message" -> "Internal server error"))
+            userRepository.insert(user).map(user => user).flatMap {
+              case lastError if !lastError.ok() => Future.successful(InternalServerError(Json.obj("message" -> "Internal server error")))
               case lastError if lastError.ok() => {
-                emailService.sendCreatedAccountEmail(user.email).map {
-                  lastError => promise success Created("").withHeaders("Location" -> user._id)
+                emailService.sendCreatedAccountEmail(user.email).flatMap {
+                  lastError => Future.successful(Created("").withHeaders("Location" -> user._id))
                 }
               }
             }
           }
-        })
-
-        promise future
+        }
       }
     }.getOrElse(Future.successful(BadRequest(Json.obj("message" -> "Invalid json"))))
   }
@@ -76,18 +73,14 @@ class AuthController @Inject() (encriptionService: IStringEncriptionService,
         val newPassword = randomStringGenerator.randomAlphaNumeric(8)
         val newMd5Password = encriptionService.encryptMd5(newPassword)
 
-        val promise = Promise[Result]
-
-        userRepository.resetPassword(resetPasswordRequest.email, newMd5Password).map({
-          case lastError if !lastError.ok() => promise success InternalServerError(Json.obj("message" -> "Internal server error"))
+        userRepository.resetPassword(resetPasswordRequest.email, newMd5Password).flatMap {
+          case lastError if !lastError.ok() => Future.successful(InternalServerError(Json.obj("message" -> "Internal server error")))
           case lastError if lastError.ok() => {
-            emailService.sendResetPasswordEmail(resetPasswordRequest.email).map {
-              lastError => promise success Ok("")
+            emailService.sendResetPasswordEmail(resetPasswordRequest.email).flatMap {
+              lastError => Future.successful(Ok(""))
             }
           }
-        })
-
-        promise future
+        }
       }
     }.getOrElse(Future.successful(BadRequest(Json.obj("message" -> "Invalid json"))))
   }
