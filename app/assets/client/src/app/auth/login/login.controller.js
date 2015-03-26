@@ -1,6 +1,7 @@
 /*jshint esnext: true */
 class LoginController {
-  constructor ($scope) {
+  constructor ($scope, authService) {
+    this.authService = authService;
     $scope.user = {
       email: 'liviu@ignat.email',
       password: 'test123'
@@ -8,7 +9,7 @@ class LoginController {
   }
 }
 
-LoginController.$inject = ['$scope'];
+LoginController.$inject = ['$scope', 'AuthService'];
 angular.module('app')
   .controller('LoginController', LoginController);
 
