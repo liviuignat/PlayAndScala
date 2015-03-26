@@ -30,10 +30,7 @@ class AuthController @Inject() (encriptionService: IStringEncriptionService,
                                 userRepository: IUserRepository)  extends Controller with MongoController {
 
   def createUser = Action.async(parse.json) { req =>
-    Json.fromJson[CreateUserRequest](req.body).fold(
-      invalid => {
-        Future.successful(BadRequest(Json.obj("message" -> "Invalid json")))
-      },
+    req.body.validate[CreateUserRequest].map {
       createUserRequest => {
         val user: User = createUserRequest
         user.password = encriptionService.encryptMd5(user.password)
@@ -55,51 +52,43 @@ class AuthController @Inject() (encriptionService: IStringEncriptionService,
 
         promise future
       }
-    )
+    }.getOrElse(Future.successful(BadRequest(Json.obj("message" -> "Invalid json"))))
   }
 
-  def login() = Action.async(parse.json) {
-    req =>
-      Json.fromJson[LoginRequest](req.body).fold(
-        invalid => {
-          Future.successful(BadRequest(Json.obj("message" -> "Invalid json")))
-        },
-        getUserRequest => {
-          userRepository.getByEmailAndPassword(getUserRequest.email, getUserRequest.password).map({
-            case Some(user) => {
-              val response: GetUserResponse = user
-              val responseJson = Json.toJson(response)
-              Ok(responseJson)
-            }
-            case None => BadRequest(Json.obj("message" -> "No such item"))
-          })
-        }
-      )
+  def login() = Action.async(parse.json) { req =>
+    req.body.validate[LoginRequest].map {
+      getUserRequest => {
+        userRepository.getByEmailAndPassword(getUserRequest.email, getUserRequest.password).map({
+          case Some(user) => {
+            val response: GetUserResponse = user
+            val responseJson = Json.toJson(response)
+            Ok(responseJson)
+          }
+          case None => BadRequest(Json.obj("message" -> "No such item"))
+        })
+      }
+    }.getOrElse(Future.successful(BadRequest(Json.obj("message" -> "Invalid json"))))
   }
 
-  def resetPassword() = Action.async(parse.json) {
-    req =>
-      Json.fromJson[ResetPasswordRequest](req.body).fold(
-        invalid => {
-          Future.successful(BadRequest(Json.obj("message" -> "Invalid json")))
-        },
-        resetPasswordRequest => {
-          val newPassword = randomStringGenerator.randomAlphaNumeric(8)
-          val newMd5Password = encriptionService.encryptMd5(newPassword)
+  def resetPassword() = Action.async(parse.json) { req =>
+    req.body.validate[ResetPasswordRequest].map {
+      resetPasswordRequest => {
+        val newPassword = randomStringGenerator.randomAlphaNumeric(8)
+        val newMd5Password = encriptionService.encryptMd5(newPassword)
 
-          val promise = Promise[Result]
+        val promise = Promise[Result]
 
-          userRepository.resetPassword(resetPasswordRequest.email, newMd5Password).map({
-            case lastError if !lastError.ok() => promise success InternalServerError(Json.obj("message" -> "Internal server error"))
-            case lastError if lastError.ok() => {
-              emailService.sendResetPasswordEmail(resetPasswordRequest.email).map {
-                lastError => promise success Ok("")
-              }
+        userRepository.resetPassword(resetPasswordRequest.email, newMd5Password).map({
+          case lastError if !lastError.ok() => promise success InternalServerError(Json.obj("message" -> "Internal server error"))
+          case lastError if lastError.ok() => {
+            emailService.sendResetPasswordEmail(resetPasswordRequest.email).map {
+              lastError => promise success Ok("")
             }
-          })
+          }
+        })
 
-          promise future
-        }
-      )
+        promise future
+      }
+    }.getOrElse(Future.successful(BadRequest(Json.obj("message" -> "Invalid json"))))
   }
 }
