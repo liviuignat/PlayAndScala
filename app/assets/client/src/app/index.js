@@ -1,5 +1,13 @@
 'use strict';
-angular.module('app', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ngRoute', 'ui.bootstrap'])
+angular.module('app', [
+  'ngAnimate',
+  'ngCookies',
+  'ngTouch',
+  'ngSanitize',
+  'ngResource',
+  'ngRoute',
+  'ui.bootstrap',
+  'angular-md5'])
 
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider

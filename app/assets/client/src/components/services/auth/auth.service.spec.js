@@ -1,7 +1,7 @@
 'use strict';
 
 describe('AuthService', function (){
-   var $http, $rootScope, service;
+   var $http, $rootScope, service, md5;
 
   beforeEach(function () {
     module('app');
@@ -11,6 +11,7 @@ describe('AuthService', function (){
     $http = $injector.get('$httpBackend');
     $rootScope = $injector.get('$rootScope');
     service = $injector.get('AuthService');
+    md5 = $injector.get('md5');
   }));
 
   it('Should have the service injected and defined', function () {
@@ -27,7 +28,7 @@ describe('AuthService', function (){
     describe('When login is successful with status code 200', function () {
       var loginServiceResponse;
       beforeEach(function () {
-        $http.expectPOST(url, loginData).respond(200);
+        $http.expectPOST(url).respond(200);
 
         service.login(loginData).then(function (result) {
           loginServiceResponse = result;
@@ -45,7 +46,7 @@ describe('AuthService', function (){
     describe('When login is successful with status code 401', function () {
       var loginServiceResponse;
       beforeEach(function () {
-        $http.expectPOST(url, loginData).respond(401);
+        $http.expectPOST(url).respond(401);
 
         service.login(loginData).then(function (result) {
           loginServiceResponse = result;

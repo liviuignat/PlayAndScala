@@ -2,19 +2,24 @@
 (function (angular) {
   var $inject = [
     '$http',
-    '$q'
+    '$q',
+    'md5'
   ];
 
   class AuthService {
-    constructor($http, $q) {
+    constructor($http, $q, md5) {
       this.$http = $http;
       this.$q = $q;
+      this.md5 = md5;
     }
 
     login(model) {
       var deferred = this.$q.defer();
 
-      this.$http.post('/api/auth/login', model).success((data, status) => {
+      var payload = angular.copy(model);
+      payload.password = this.md5.createHash(model.password || '');
+
+      this.$http.post('/api/auth/login', payload).success((data, status) => {
         if (status === 200) {
           deferred.resolve(new AuthResponse(true));
         }
