@@ -18,6 +18,52 @@ describe('AuthService', function (){
     expect(service).toBeDefined();
   });
 
+  describe('When user creates a new account', function () {
+    var url = '/api/auth/create';
+    var createAccountData = {
+      email: 'liviu@ignat.email',
+      password: 'test123',
+      firstName: 'Liviu',
+      lastName: 'Ignat'
+    };
+
+    describe('When login is successful with status code 201', function () {
+      var response;
+      beforeEach(function () {
+        $http.expectPOST(url).respond(201);
+
+        service.createAccount(createAccountData).then(function (result) {
+          response = result;
+        });
+
+        $http.flush();
+      });
+
+      it('Should have the response successful', function () {
+        expect(response).toBeDefined();
+        expect(response.success).toBe(true);
+      });
+    });
+
+    describe('When login is successful with status code 401', function () {
+      var response;
+      beforeEach(function () {
+        $http.expectPOST(url).respond(401);
+
+        service.createAccount(createAccountData).then(function (result) {
+          response = result;
+        });
+
+        $http.flush();
+      });
+
+      it('Should NOT have a successful response', function () {
+        expect(response).toBeDefined();
+        expect(response.success).toBe(false);
+      });
+    });
+  });
+
   describe('When user logs in', function () {
     var url = '/api/auth/login';
     var loginData = {

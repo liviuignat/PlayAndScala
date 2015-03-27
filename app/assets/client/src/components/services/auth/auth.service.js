@@ -34,7 +34,20 @@
     }
 
     createAccount(model) {
-      return this.$http.post('/api/auth/create', model);
+      var deferred = this.$q.defer();
+
+      this.$http.post('/api/auth/create', model).success((data, status) => {
+        if (status === 201) {
+          deferred.resolve(new AuthResponse(true));
+        }
+        deferred.resolve(new AuthResponse(false, 'User already exists'));
+      }).error(() => {
+        deferred.resolve(new AuthResponse(false, 'Unexpected error from the server'));
+      }).catch(() => {
+        deferred.resolve(new AuthResponse(false, 'Unexpected error from the server'));
+      });
+
+      return deferred.promise;
     }
 
     resetPassword(model) {
