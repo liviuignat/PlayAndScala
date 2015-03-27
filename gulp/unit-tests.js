@@ -27,7 +27,8 @@ function runTests (singleRun, done) {
     paths.tmp + '/assets/app/index.js',
     paths.tmp + '/assets/app/templateCacheHtml.js',
     paths.tmp + '/assets/app/**/*.js',
-    paths.tmp + '/assets/components/**/*.js'
+    paths.tmp + '/assets/components/**/*.js',
+    paths.src + '/**/*.spec.js'
   ]));
 
   gulp.src(testFiles)

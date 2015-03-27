@@ -27,9 +27,12 @@
     "describe": false,
     "it": false,
     "before": false,
+    "spyOn": false,
     "beforeEach": false,
     "after": false,
     "afterEach": false,
-    "expect": false
+    "expect": false,
+    "alert": false,
+    "confirm": false
   }
 }

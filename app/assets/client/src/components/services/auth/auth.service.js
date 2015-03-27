@@ -14,7 +14,7 @@
     login(model) {
       var deferred = this.$q.defer();
 
-      this.$http.post('/api/auth/login', model).success((data, status, headers, config) => {
+      this.$http.post('/api/auth/login', model).success((data, status) => {
         if (status === 200) {
           deferred.resolve(new AuthResponse(true));
         }
@@ -29,11 +29,11 @@
     }
 
     createAccount(model) {
-      return Http.get(this).post('/api/auth/create', model);
+      return this.$http.post('/api/auth/create', model);
     }
 
     resetPassword(model) {
-      return Http.get(this).post('/api/auth/resetpassword', model);
+      return  this.$http.post('/api/auth/resetpassword', model);
     }
   }
 

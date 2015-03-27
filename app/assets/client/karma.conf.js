@@ -19,6 +19,10 @@ var files = bowerFiles.concat([
   '../../../public/dev/assets/components/**/*.js',
 ]);
 
+var exclude = [
+  '../../../public/dev/assets/app/**/*.spec.js',
+];
+
 module.exports = function(config) {
 
   config.set({
@@ -40,6 +44,7 @@ module.exports = function(config) {
       'karma-jasmine'
     ],
 
-    files: files
+    files: files,
+    exclude: exclude
   });
 };

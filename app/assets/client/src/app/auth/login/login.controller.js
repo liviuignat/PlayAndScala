@@ -24,8 +24,8 @@
           return;
         }
 
-        this.$location.path('/search');
-      }).catch(error => {
+        this.$location.path('search');
+      }).catch(() => {
         this.alertService.showAlert('Unknown error occurred');
       });
     }
