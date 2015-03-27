@@ -16,6 +16,7 @@ var files = bowerFiles.concat([
   '../../../public/dev/assets/app/index.js',
   '../../../public/dev/assets/app/templateCacheHtml.js',
   '../../../public/dev/assets/app/**/*.js',
+  '../../../public/dev/assets/components/**/*.js',
 ]);
 
 module.exports = function(config) {
