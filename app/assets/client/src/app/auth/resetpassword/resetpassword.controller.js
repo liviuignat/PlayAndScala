@@ -1,10 +1,13 @@
- /*jshint esnext: true */
-class ResetPasswordController {
-  constructor ($scope) {
-    $scope.email = 'liviu@ignat.email';
-  }
-}
+ (function (angular) {
+  var $inject = [];
 
-ResetPasswordController.$inject = ['$scope'];
-angular.module('app')
-  .controller('ResetPasswordController', ResetPasswordController);
+  class ResetPasswordController {
+    constructor () {
+    }
+  }
+
+  ResetPasswordController.$inject = $inject;
+  angular.module('app')
+    .controller('ResetPasswordController', ResetPasswordController);
+
+})(angular);

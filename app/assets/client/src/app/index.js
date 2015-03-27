@@ -1,21 +1,22 @@
 'use strict';
-/*jshint esnext: true */
-
 angular.module('app', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngResource', 'ngRoute', 'ui.bootstrap'])
 
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
       .when('/login', {
         templateUrl: 'app/auth/login/login.tpl.html',
-        controller: 'LoginController'
+        controller: 'LoginController',
+        controllerAs:'model'
       })
       .when('/register', {
         templateUrl: 'app/auth/createaccount/createaccount.tpl.html',
-        controller: 'CreateAccountController'
+        controller: 'CreateAccountController',
+        controllerAs:'model'
       })
       .when('/resetpassword', {
         templateUrl: 'app/auth/resetpassword/resetpassword.tpl.html',
-        controller: 'ResetPasswordController'
+        controller: 'ResetPasswordController',
+        controllerAs:'model'
       })
       .otherwise({
         redirectTo: '/login'

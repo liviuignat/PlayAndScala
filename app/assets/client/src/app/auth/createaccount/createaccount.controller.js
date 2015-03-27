@@ -1,14 +1,12 @@
-/*jshint esnext: true */
-class CreateAccountController {
-  constructor ($scope) {
-    $scope.user = {
-      email: 'liviu@ignat.email',
-      password: 'test123',
-      repeatPassword: 'dsadas'
-    };
-  }
-}
+(function (angular) {
+  var $inject = [];
 
-CreateAccountController.$inject = ['$scope'];
-angular.module('app')
-  .controller('CreateAccountController', CreateAccountController);
+  class CreateAccountController {
+    constructor () {
+    }
+  }
+
+  CreateAccountController.$inject = $inject;
+  angular.module('app')
+    .controller('CreateAccountController', CreateAccountController);
+})(angular);
