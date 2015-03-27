@@ -12,8 +12,8 @@
       this.alertService = alertService;
 
       this.user = {
-        email: 'liviu@ignat.email',
-        password: 'test'
+        email: '',
+        password: ''
       };
     }
 
