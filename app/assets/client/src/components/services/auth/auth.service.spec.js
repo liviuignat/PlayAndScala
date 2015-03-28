@@ -107,4 +107,47 @@ describe('AuthService', function (){
       });
     });
   });
+
+  describe('When user resets password', function () {
+      var url = '/api/auth/resetpassword';
+      var postData = {
+        email: 'liviu@ignat.email'
+      };
+
+      describe('When reset password is successful with status code 200', function () {
+        var resetPasswordResponse;
+        beforeEach(function () {
+          $http.expectPOST(url).respond(200);
+
+          service.resetPassword(postData).then(function (result) {
+            resetPasswordResponse = result;
+          });
+
+          $http.flush();
+        });
+
+        it('Should have the response successful', function () {
+          expect(resetPasswordResponse).toBeDefined();
+          expect(resetPasswordResponse.success).toBe(true);
+        });
+      });
+
+      describe('When reset password is successful with status code 401', function () {
+        var resetPasswordResponse;
+        beforeEach(function () {
+          $http.expectPOST(url).respond(401);
+
+          service.resetPassword(postData).then(function (result) {
+            resetPasswordResponse = result;
+          });
+
+          $http.flush();
+        });
+
+        it('Should NOT have a successful response', function () {
+          expect(resetPasswordResponse).toBeDefined();
+          expect(resetPasswordResponse.success).toBe(false);
+        });
+      });
+    });
 });
