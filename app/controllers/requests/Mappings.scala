@@ -20,5 +20,8 @@ object Mappings {
       lastName = req.lastName)
 
   implicit def userToGetUserResponse(u: User) =
-    GetUserResponse(u._id, u.email, u.firstName.getOrElse(""), u.lastName.getOrElse(""), u.isActive)
+    GetUserResponse(id = u._id,
+      firstName = u.firstName.getOrElse(""),
+      lastName = u.lastName.getOrElse(""),
+      isActive = u.isActive)
 }

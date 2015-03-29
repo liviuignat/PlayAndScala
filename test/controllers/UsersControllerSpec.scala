@@ -82,9 +82,16 @@ class UsersControllerSpec extends JasmineSpec with BeforeAndAfter with BeforeAnd
             result.header.status should equal(OK)
           }
 
-          it("Should not have response password undefined") {
+          it("Should have response password undefined") {
             val json: JsValue = contentAsJson(response.get)
             val password = json.\("password")
+
+            assert(password.getClass == (new JsUndefined("")).getClass)
+          }
+
+          it("Should have response email undefined") {
+            val json: JsValue = contentAsJson(response.get)
+            val password = json.\("email")
 
             assert(password.getClass == (new JsUndefined("")).getClass)
           }
@@ -114,8 +121,8 @@ class UsersControllerSpec extends JasmineSpec with BeforeAndAfter with BeforeAnd
 
             it("Should have the two users in the results") {
               val users: List[GetUserResponse] = contentAsJson(response.get).as[List[GetUserResponse]]
-              users(0).email should equal("liviu@ignat.email")
-              users(1).email should equal("liviu.test@ignat.email")
+              users(0).firstName should equal("Liviu")
+              users(1).firstName should equal("Liviu Test")
             }
           }
 
@@ -141,7 +148,7 @@ class UsersControllerSpec extends JasmineSpec with BeforeAndAfter with BeforeAnd
 
             it("Should have the second user in the results") {
               val users: List[GetUserResponse] = contentAsJson(response.get).as[List[GetUserResponse]]
-              users(0).email should equal("liviu.test@ignat.email")
+              users(0).firstName should equal("Liviu Test")
             }
           }
 
