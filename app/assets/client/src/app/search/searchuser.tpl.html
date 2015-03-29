@@ -5,7 +5,7 @@
   <div class="row userContainer-row" ng-click="model.userSelect(user)" ng-show="model.users.length" ng-repeat="user in model.users">
     {{user.firstName}} {{user.lastName}}
   </div>
-  <div class="row" ng-show="!model.users.length">
+  <div class="row userContainer-row" ng-show="!model.users.length">
     No user found ...
   </div>
 </div>
