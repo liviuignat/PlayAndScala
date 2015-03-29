@@ -26,6 +26,11 @@ angular.module('app', [
         controller: 'ResetPasswordController',
         controllerAs:'model'
       })
+      .when('/search', {
+        templateUrl: 'app/search/searchuser.tpl.html',
+        controller: 'SearchUserController',
+        controllerAs:'model'
+      })
       .otherwise({
         redirectTo: '/login'
       });
