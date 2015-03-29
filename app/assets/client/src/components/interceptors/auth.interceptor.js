@@ -28,7 +28,7 @@
 
     request(config) {
       debugger;
-      var deferred = $q.defer();
+      var deferred = this.$q.defer();
       var isLoggedIn = this.authService.isLoggedIn();
       this.$log = 'is logged in: ' + isLoggedIn;
       return deferred.promise;
