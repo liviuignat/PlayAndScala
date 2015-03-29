@@ -1,0 +1,34 @@
+{
+  "name": "ngWig",
+  "version": "0.2.1",
+  "devDependencies": {
+    "angular": "~1.2.16"
+  },
+  "homepage": "https://github.com/stevermeister/ng-biscuit",
+  "authors": [
+    "Stepan Suvorov <stevermeister@gmail.com>"
+  ],
+  "description": "AngularJS cookies extension",
+  "main": "dist/ng-biscuit.js",
+  "keywords": [
+    "angular",
+    "cookies",
+    "domain",
+    "path"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "node_modules",
+    "bower_components"
+  ],
+  "_release": "0.2.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.2.1",
+    "commit": "ec56af8540c1be01ec707d6f00f7cae660c146eb"
+  },
+  "_source": "git://github.com/stevermeister/ng-biscuit.git",
+  "_target": "~0.2.1",
+  "_originalSource": "ng-biscuit",
+  "_direct": true
+}

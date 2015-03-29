@@ -2,6 +2,7 @@
 angular.module('app', [
   'ngAnimate',
   'ngCookies',
+  'ngBiscuit',
   'ngTouch',
   'ngSanitize',
   'ngResource',
@@ -9,7 +10,7 @@ angular.module('app', [
   'ui.bootstrap',
   'angular-md5'])
 
-  .config(function ($routeProvider, $locationProvider) {
+  .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
       .when('/login', {
         templateUrl: 'app/auth/login/login.tpl.html',
@@ -39,6 +40,8 @@ angular.module('app', [
       .otherwise({
         redirectTo: '/login'
       });
+
+    $httpProvider.interceptors.push('AuthInterceptor');
 
     $locationProvider.html5Mode(true).hashPrefix('!');
   });

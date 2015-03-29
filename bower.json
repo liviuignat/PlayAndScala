@@ -2,6 +2,7 @@
   "name": "app",
   "version": "0.0.0",
   "dependencies": {
+    "angular": "~1.3.4",
     "angular-animate": "~1.3.4",
     "angular-cookies": "~1.3.4",
     "angular-touch": "~1.3.4",
@@ -10,9 +11,9 @@
     "angular-route": "~1.3.4",
     "bootstrap": "~3.3.1",
     "angular-bootstrap": "0.12.x",
-    "angular": "~1.3.4",
     "traceur-runtime": "~0.0.87",
-    "angular-md5": "~0.1.7"
+    "angular-md5": "~0.1.7",
+    "ng-biscuit": "~0.2.1"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.4"
