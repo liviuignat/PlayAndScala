@@ -16,6 +16,6 @@ class StringEncriptionService extends IStringEncriptionService {
     val m = java.security.MessageDigest.getInstance("MD5")
     val b = value.getBytes("UTF-8")
     m.update(b, 0, b.length)
-    return new java.math.BigInteger(1, m.digest()).toString(16)
+    m.digest().map(0xFF & _).map("%02x".format(_)).mkString
   }
 }

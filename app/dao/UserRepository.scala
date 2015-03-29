@@ -48,7 +48,11 @@ class UserRepository @Inject() () extends IUserRepository {
   }
 
   override def getByEmailAndPassword(email: String, password: String): Future[Option[User]] = {
-    val selector =  Json.obj("email" -> email, "password" -> password, "isActive" -> true)
+    val regex = Json.obj("$regex" -> (".*" + email + ".*"), "$options" -> "-i")
+    val selector =  Json.obj(
+      "email" -> regex,
+      "password" -> password,
+      "isActive" -> true)
     collection.find(selector).one[User]
   }
 
