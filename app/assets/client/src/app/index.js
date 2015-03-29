@@ -31,6 +31,11 @@ angular.module('app', [
         controller: 'SearchUserController',
         controllerAs:'model'
       })
+      .when('/user/:id', {
+        templateUrl: 'app/user/detail/userdetail.tpl.html',
+        controller: 'UserDetailController',
+        controllerAs:'model'
+      })
       .otherwise({
         redirectTo: '/login'
       });

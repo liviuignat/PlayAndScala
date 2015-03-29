@@ -21,7 +21,7 @@
     }
 
     userSelect(user) {
-      this.$location.path('user/' + user.id)
+      this.$location.path('user/' + user.id);
     }
   }
 

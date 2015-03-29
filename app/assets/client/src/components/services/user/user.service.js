@@ -18,7 +18,7 @@
       var deferred = this.$q.defer();
       var url = '/api/user?q=' + query;
 
-      this.currentRequest = this.$http({
+      this.$http({
         method: 'GET',
         url: url,
         timeout: this.cancelationOfSearchRequest.promise,
@@ -37,10 +37,29 @@
     }
 
     cancelSearchRequest() {
-      if(this.$http.pendingRequests.length) {
-        this.cancelationOfSearchRequest.resolve();
-        this.cancelationOfSearchRequest = this.$q.defer();
-      }
+      this.cancelationOfSearchRequest.resolve();
+      this.cancelationOfSearchRequest = this.$q.defer();
+    }
+
+    getUserDetail(userId) {
+      var deferred = this.$q.defer();
+      var url = '/api/user/' + userId;
+
+      this.$http({
+        method: 'GET',
+        url: url
+      }).success((data, status) => {
+        if (status === 200) {
+          deferred.resolve(data);
+        }
+        deferred.reject();
+      }).error(() => {
+        deferred.reject();
+      }).catch(() => {
+        deferred.reject();
+      });
+
+      return deferred.promise;
     }
   }
 
