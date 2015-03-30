@@ -2,7 +2,16 @@ describe('UserService', function (){
    var $http, $rootScope, service, md5;
 
   beforeEach(module('app', function ($httpProvider) {
-    $httpProvider.interceptors = [];
+    angular.module('app').factory('AuthInterceptor', function () {
+      return {
+        request: function(config) {
+          return config;
+        },
+        requestError: function(rejection) {
+          return rejection;
+        }
+      };
+    });
   }));
 
   beforeEach(inject(function ($injector) {
