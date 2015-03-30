@@ -8,24 +8,32 @@ angular.module('app', [
   'ngResource',
   'ngRoute',
   'ui.bootstrap',
-  'angular-md5'])
+  'angular-md5']);
 
-  .config(function ($routeProvider, $locationProvider, $httpProvider) {
+  angular.module('app').config(function ($httpProvider) {
+    $httpProvider.interceptors.push('AuthInterceptor');
+  });
+
+  angular.module('app').config(function ($routeProvider, $locationProvider) {
+    $routeProvider.caseInsensitiveMatch = true;
     $routeProvider
       .when('/login', {
         templateUrl: 'app/auth/login/login.tpl.html',
         controller: 'LoginController',
-        controllerAs:'model'
+        controllerAs:'model',
+        publicAccess: true
       })
       .when('/register', {
         templateUrl: 'app/auth/createaccount/createaccount.tpl.html',
         controller: 'CreateAccountController',
-        controllerAs:'model'
+        controllerAs:'model',
+        publicAccess: true
       })
       .when('/resetpassword', {
         templateUrl: 'app/auth/resetpassword/resetpassword.tpl.html',
         controller: 'ResetPasswordController',
-        controllerAs:'model'
+        controllerAs:'model',
+        publicAccess: true
       })
       .when('/search', {
         templateUrl: 'app/search/searchuser.tpl.html',
@@ -41,7 +49,30 @@ angular.module('app', [
         redirectTo: '/login'
       });
 
-    $httpProvider.interceptors.push('AuthInterceptor');
-
     $locationProvider.html5Mode(true).hashPrefix('!');
+  });
+  angular.module('app').run(function($injector, $window) {
+    var appBase = '/app/';
+    var isOnApp = $window.location.pathname.indexOf(appBase) === 0;
+
+    if(isOnApp) {
+      var $route = $injector.get('$route');
+      var $location = $injector.get('$location');
+      var $rootScope = $injector.get('$rootScope');
+      var authService = $injector.get('AuthService');
+
+      var routesOpenToPublic = [];
+      angular.forEach($route.routes, function(route, path) {
+        if(route.publicAccess) {
+          (routesOpenToPublic.push(path));
+        }
+      });
+
+      $rootScope.$on('$routeChangeStart', function() {
+        var closedToPublic = (-1 === routesOpenToPublic.indexOf($location.path()));
+        if(closedToPublic && !authService.isLoggedIn()) {
+           $location.path('/login');
+        }
+      });
+    }
   });

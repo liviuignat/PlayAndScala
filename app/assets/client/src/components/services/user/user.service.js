@@ -22,6 +22,7 @@
         method: 'GET',
         url: url,
         timeout: this.cancelationOfSearchRequest.promise,
+        isSecure: true
       }).success((data, status) => {
         if (status === 200) {
           deferred.resolve(data);
@@ -47,7 +48,8 @@
 
       this.$http({
         method: 'GET',
-        url: url
+        url: url,
+        isSecure: true
       }).success((data, status) => {
         if (status === 200) {
           deferred.resolve(data);

@@ -1,6 +1,7 @@
 /*jshint esnext: true */
 (function (angular) {
   var $inject = [
+    '$rootScope',
     '$http',
     '$q',
     '$window',
@@ -8,11 +9,12 @@
     'md5'
   ];
 
-  var REFRESH_TOKEN_COOKIE_KEY = 'session_id';
-  var AUTH_TOKEN_CACHE_KEY = 'session_auth_token';
+  const REFRESH_TOKEN_COOKIE_KEY = 'session_id';
+  const AUTH_TOKEN_CACHE_KEY = 'session_auth_token';
 
   class AuthService {
-    constructor($http, $q, $window, $cookies, md5) {
+    constructor($rootScope, $http, $q, $window, $cookies, md5) {
+      this.$rootScope = $rootScope;
       this.$http = $http;
       this.$q = $q;
       this.$window = $window;
@@ -34,9 +36,15 @@
 
     getAuthToken() {
       var value = this.$window.sessionStorage.getItem(AUTH_TOKEN_CACHE_KEY);
+
+      if(!value) {
+        return this.$q.when(null);
+      }
+
       var json = JSON.parse(value);
       var isExpired = json.expires < Date.now();
-      this.$q.when(isExpired ? null : json.token);
+
+      return this.$q.when(isExpired ? null : json.token);
     }
 
     setAuthToken(token) {
@@ -49,8 +57,24 @@
     }
 
     refreshAuthToken() {
+      if(!this.isLoggedIn()) {
+        this.$q.reject(new Error('Not logged in'));
+      }
       var newToken = 'refreshed_auth_token';
       this.setAuthToken(newToken);
+    }
+
+    refreshAuthTokenIfNotExpired() {
+      var deferred = this.$q.defer();
+
+      this.getAuthToken().then((authToken) => {
+        if(!authToken) {
+          return this.refreshAuthToken();
+        }
+        deferred.resolve();
+      });
+
+      return deferred.promise;
     }
 
     login(model) {
@@ -60,7 +84,11 @@
 
       payload.password = this.md5.createHash(model.password || '');
 
-      this.$http.post('/api/auth/login', payload).success((data, status) => {
+      this.$http({
+        method: 'POST',
+        url: '/api/auth/login',
+        data: payload
+      }).success((data, status) => {
         if (status === 200) {
           this.getServerToken().then((tokenData) => {
             this.$cookies.put(REFRESH_TOKEN_COOKIE_KEY, tokenData.autoRereshToken, {
@@ -87,13 +115,17 @@
     logout() {
       this.$window.sessionStorage.removeItem(AUTH_TOKEN_CACHE_KEY);
       this.$cookies.remove(REFRESH_TOKEN_COOKIE_KEY);
-      this.$q.when();
+      return this.$q.when();
     }
 
     createAccount(model) {
       var deferred = this.$q.defer();
 
-      this.$http.post('/api/auth/create', model).success((data, status) => {
+      this.$http({
+        method: 'POST',
+        url: '/api/auth/create',
+        data: model
+      }).success((data, status) => {
         if (status === 201) {
           deferred.resolve(new AuthResponse(true));
         }
@@ -110,7 +142,11 @@
     resetPassword(model) {
       var deferred = this.$q.defer();
 
-      this.$http.post('/api/auth/resetpassword', model).success((data, status) => {
+      this.$http({
+        method: 'POST',
+        url: '/api/auth/resetpassword',
+        data: model
+      }).success((data, status) => {
         if (status === 200) {
           deferred.resolve(new AuthResponse(true));
         }
