@@ -3,9 +3,9 @@
 describe('AuthService', function (){
    var $http, $rootScope, service, md5;
 
-  beforeEach(function () {
-    module('app');
-  });
+  beforeEach(module('app', function ($httpProvider) {
+    $httpProvider.interceptors = [];
+  }));
 
   beforeEach(inject(function ($injector) {
     $http = $injector.get('$httpBackend');

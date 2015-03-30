@@ -17,6 +17,6 @@ before_script:
   - "npm install"
 
 script:
-  - sleep 15
+  - sleep 5
   - "sbt clean test"
   - "./node_modules/.bin/karma start ./app/assets/client/karma.conf.js --browsers Firefox --single-run"
