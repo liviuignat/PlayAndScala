@@ -13,14 +13,17 @@ var bowerFiles = bowerDeps.js.map(function (file) {
 });
 
 var files = bowerFiles.concat([
-  '../../../public/dev/assets/app/index.js',
-  '../../../public/dev/assets/app/templateCacheHtml.js',
-  '../../../public/dev/assets/app/**/*.js',
-  '../../../public/dev/assets/components/**/*.js',
+  './../../../public/dev/assets/app/index.js',
+  './../../../public/dev/assets/app/templateCacheHtml.js',
+  './../../../public/dev/assets/app/**/*.js',
+  './../../../public/dev/assets/components/**/*.js',
+  './../../../public/dev/assets/**/*.mock.js',
+  './**/*.spec.js'
 ]);
 
 var exclude = [
-  '../../../public/dev/assets/app/**/*.spec.js',
+  './../../../public/dev/assets/app/**/*.spec.js',
+  './../../../public/dev/assets/components/**/*.spec.js'
 ];
 
 module.exports = function(config) {

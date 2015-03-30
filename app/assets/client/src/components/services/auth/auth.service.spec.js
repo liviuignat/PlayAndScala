@@ -3,17 +3,8 @@
 describe('AuthService', function (){
    var $http, $rootScope, service, md5;
 
-  beforeEach(module('app', function ($httpProvider) {
-    angular.module('app').factory('AuthInterceptor', function () {
-      return {
-        request: function(config) {
-          return config;
-        },
-        requestError: function(rejection) {
-          return rejection;
-        }
-      };
-    });
+  beforeEach(module('app', function () {
+    angular.module('app').factory('AuthInterceptor', mocks.AuthInterceptorMock.getInstance);
   }));
 
   beforeEach(inject(function ($injector) {

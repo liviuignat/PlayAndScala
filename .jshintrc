@@ -32,6 +32,7 @@
     "after": false,
     "afterEach": false,
     "expect": false,
+    "window": false,
     "alert": false,
     "confirm": false
   }
