@@ -55,7 +55,6 @@
       this.init().then(() => {
         if(config.isSecure) {
           var isLoggedIn = this.authService.isLoggedIn();
-          this.$log.info('Is logged in: ' + isLoggedIn);
 
           if(isLoggedIn) {
             return this.tryRefreshToken().then(() => {

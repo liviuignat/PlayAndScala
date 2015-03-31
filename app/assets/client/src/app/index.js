@@ -54,12 +54,14 @@ angular.module('app', [
   angular.module('app').run(function($injector, $window) {
     var appBase = '/app/';
     var isOnApp = $window.location.pathname.indexOf(appBase) === 0;
+    var authService = $injector.get('AuthService');
+    var $rootScope = $injector.get('$rootScope');
+
+    $rootScope.isLoggedIn = authService.isLoggedIn();
 
     if(isOnApp) {
       var $route = $injector.get('$route');
       var $location = $injector.get('$location');
-      var $rootScope = $injector.get('$rootScope');
-      var authService = $injector.get('AuthService');
 
       var routesOpenToPublic = [];
       angular.forEach($route.routes, function(route, path) {

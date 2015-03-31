@@ -13,6 +13,7 @@ gulp.task('inject', ['styles', 'scripts'], function () {
 
   var injectScripts = gulp.src([
     paths.tmp + '/assets/app/index.js',
+    paths.tmp + '/assets/app/register.js',
     paths.tmp + '/assets/{app,components}/**/*.js',
     '!' + paths.tmp + '/assets/app/templateCacheHtml.js',
     '!' + paths.tmp + '/assets/{app,components}/**/*.spec.js',

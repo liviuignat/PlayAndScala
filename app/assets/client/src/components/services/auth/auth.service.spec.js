@@ -4,7 +4,7 @@ describe('AuthService', function (){
    var $http, $rootScope, service, md5;
 
   beforeEach(module('app', function () {
-    angular.module('app').factory('AuthInterceptor', mocks.AuthInterceptorMock.getInstance);
+    angular.module('app').factory('AuthInterceptor', window.mocks.AuthInterceptorMock.getInstance);
   }));
 
   beforeEach(inject(function ($injector) {

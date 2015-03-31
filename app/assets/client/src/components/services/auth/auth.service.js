@@ -98,6 +98,8 @@
             });
             this.setAuthToken(tokenData.token);
           }).then(() => {
+            this.$rootScope.isLoggedIn = true;
+            this.$rootScope.$broadcast('auth:login');
             deferred.resolve(new AuthResponse(true));
           }).catch(function () {
             deferred.resolve(failResponse);
@@ -115,6 +117,8 @@
     logout() {
       this.$window.sessionStorage.removeItem(AUTH_TOKEN_CACHE_KEY);
       this.$cookies.remove(REFRESH_TOKEN_COOKIE_KEY);
+      this.$rootScope.$broadcast('auth:logout');
+      this.$rootScope.isLoggedIn = false;
       return this.$q.when();
     }
 

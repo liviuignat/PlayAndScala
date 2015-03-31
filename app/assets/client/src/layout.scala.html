@@ -48,8 +48,11 @@
             <li>
               <a href="/app/search">Search</a>
             </li>
-            <li>
+            <li style="display: none;" ng-class="{'show': !isLoggedIn}">
               <a href="/app/login">Login</a>
+            </li>
+            <li style="display: none;" ng-class="{'show': isLoggedIn}">
+              <logout-button></logout-button>
             </li>
             <li>
               <a target="_blank" href="http://www.ignat.email/">Contact</a>

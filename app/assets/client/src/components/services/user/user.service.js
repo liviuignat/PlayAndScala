@@ -66,7 +66,7 @@
   }
 
   UserService.$inject = $inject;
-    angular.module('app')
-      .service('UserService', UserService);
+  angular.module('app')
+    .service('UserService', UserService);
 
 })(angular);

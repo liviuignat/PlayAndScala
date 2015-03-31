@@ -47,8 +47,11 @@
             <li>
               <a href="/app/search">Search</a>
             </li>
-            <li>
+            <li style="display: none;" ng-class="{'show': !isLoggedIn}">
               <a href="/app/login">Login</a>
+            </li>
+            <li style="display: none;" ng-class="{'show': isLoggedIn}">
+              <logout-button></logout-button>
             </li>
             <li>
               <a target="_blank" href="http://www.ignat.email/">Contact</a>
@@ -94,12 +97,14 @@
   <!-- build:js(public/dev) /assets/app/app.js -->
   <!-- inject:js -->
   <script src="/assets/app/index.js"></script>
+  <script src="/assets/app/register.js"></script>
   <script src="/assets/app/search/searchuser.controller.js"></script>
   <script src="/assets/components/interceptors/auth.interceptor.js"></script>
   <script src="/assets/app/auth/createaccount/createaccount.controller.js"></script>
   <script src="/assets/app/auth/login/login.controller.js"></script>
   <script src="/assets/app/auth/resetpassword/resetpassword.controller.js"></script>
   <script src="/assets/app/user/detail/userdetail.controller.js"></script>
+  <script src="/assets/components/directives/logoutbutton/logout-button.directive.js"></script>
   <script src="/assets/components/services/auth/auth.service.js"></script>
   <script src="/assets/components/services/alert/alert.service.js"></script>
   <script src="/assets/components/services/user/user.service.js"></script>
