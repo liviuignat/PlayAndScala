@@ -1,16 +1,18 @@
 (function (angular) {
   var $inject = [
     '$q',
+    '$window',
     'AuthService'
   ];
 
   class LogoutButtonDirective {
-    constructor($q, authService) {
+    constructor($q, $window, authService) {
       this.template = '<a ng-click="click($event)" href="#">Logout</a>';
       this.restrict = 'E';
       this.replace = true;
 
       this.$q = $q;
+      this.$window = $window;
       this.authService = authService;
     }
 
@@ -23,8 +25,11 @@
     }
 
     click(evt) {
-      this.authService.logout();
       evt.preventDefault();
+
+      return this.authService.logout().then(() => {
+        this.$window.location.href = '/';
+      });
     }
   }
 

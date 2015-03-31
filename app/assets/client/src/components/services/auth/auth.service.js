@@ -116,7 +116,10 @@
 
     logout() {
       this.$window.sessionStorage.removeItem(AUTH_TOKEN_CACHE_KEY);
-      this.$cookies.remove(REFRESH_TOKEN_COOKIE_KEY);
+      this.$cookies.remove(REFRESH_TOKEN_COOKIE_KEY, {
+        path: '/',
+        secure: false
+      });
       this.$rootScope.$broadcast('auth:logout');
       this.$rootScope.isLoggedIn = false;
       return this.$q.when();
